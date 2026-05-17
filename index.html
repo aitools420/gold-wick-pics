@@ -596,9 +596,10 @@ a.coin:active { transform: scale(0.97); }
     0 -1px 0 hsl(var(--seal-hue) 70% 9%),
     0 2px 4px rgba(0,0,0,0.7);
   display: flex; align-items: center; justify-content: center;
-  cursor: default;
+  cursor: pointer;
   padding: 0;
   position: relative;
+  text-decoration: none;
   transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
 }
 .seal::before {
@@ -1039,12 +1040,11 @@ function entryParts(t, i) {
   }
   const fortuneHtml = `<div class="fortune-plate">${fortuneInner}</div>`;
   const hue = sealHue(epoch).toFixed(1);
-  const sealHtml = `<button class="seal${canOpen ? ' clickable' : ''}"
-                            type="button"
-                            style="--seal-hue: ${hue}"
-                            ${canOpen
-                              ? `onclick="openDetail(${i})" aria-label="View past hoards of ${escapeHtml(t.name)}"`
-                              : 'disabled aria-label="No past hoards yet"'}>${roman}</button>`;
+  // Every seal — regardless of epoch — opens the shared /library archive.
+  const sealHtml = `<a class="seal clickable"
+                       href="/library/"
+                       style="--seal-hue: ${hue}"
+                       aria-label="Open library of past hoards">${roman}</a>`;
   return { avatarHtml, nameHtml, coinHtml, fortuneHtml, sealHtml };
 }
 
@@ -1295,26 +1295,11 @@ function history_pushHash(hash) {
   window.history.pushState({}, '', url);
 }
 
-window.addEventListener('popstate', () => {
-  const m = location.hash.match(/^#t(\d+)$/);
-  if (m) {
-    const idx = parseInt(m[1], 10);
-    if (travellers[idx]) { openDetail(idx); return; }
-  }
-  closeDetail();
-});
-
 /* ============================================================
    BOOT
    ============================================================ */
 renderList();
 hydrateLiveFortunes();
-// Deep-link support: #t3 → opens traveller index 3
-const m = location.hash.match(/^#t(\d+)$/);
-if (m) {
-  const idx = parseInt(m[1], 10);
-  if (travellers[idx] && epochOf(travellers[idx]) > 1) openDetail(idx);
-}
 
 // Expose for live edits in console
 window.travellers = travellers;
