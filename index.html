@@ -944,7 +944,7 @@ footer .disclaimer {
 
 <footer>
   <div>Inscribed by the keeper of <a href="https://meta.wick.pics/">wick pics</a></div>
-  <div class="disclaimer">these tokens are not endorsed by these users beyond just being their current favorite coins, these users are not necessarily the devs of these tokens, coins can go up or down, none of this is financial advice</div>
+  <div class="disclaimer">these tokens are not endorsed by these users beyond just being their current favorite coins. <br> these users are not necessarily the devs of these tokens. coins can go up or down. <br> none of this is financial advice</div>
 </footer>
 
 <script>
@@ -961,13 +961,15 @@ const FINK_CA   = "0x578f94F729D41983b77a07650517479e409c329B";  // BaalRock's P
 const LORD_CA   = "0xBb815Fc95Cc696299906B19F6f65bACf921B4a0E";  // WARLORD on PulseChain
 const PEACH_CA  = "0x3cC6704b0902475587363DEfbD6dAb2ec0581628";  // Freedom of Peach on PulseChain
 const FSJAL_CA  = "0xae8b25B28D3eF3ADe67aD40Fd96af45faad3a271";  // Fsjal on PulseChain
+const WARTIME_CA= "0x85bff9e86865B3ea8B9f59eb60e20eC5c6d21cee";  // WARTIME on PulseChain (Pesant Pete)
 
 // Section list (rendered top-to-bottom). Each traveller declares which
 // section it belongs to via its `section` key.
 const sections = [
-  { key: "crowned",   title: "Crowned Crumpets"     },
-  { key: "pesantry",  title: "PulseChain Pesantry"  },
-  { key: "test",      title: "Test Tourney"         }
+  { key: "crowned",       title: "Crowned Crumpets"     },
+  { key: "pesantry",      title: "PulseChain Pesantry"  },
+  { key: "court_jesters", title: "Court Jesters"        },
+  { key: "test",          title: "Test Tourney"         }
 ];
 
 const travellers = [
@@ -1119,6 +1121,18 @@ const travellers = [
     inscribed: "Day XVIII, May 2026",
     coin: "HEX",
     coinLink: "https://dexscreener.com/pulsechain/" + HEX_CA,
+    fortune: null,
+    fortuneLive: true,
+    history: []
+  },
+  {
+    section: "pesantry",
+    name: "Pesant Pete",
+    nameLink: "https://x.com/wartimegeneral",
+    avatar: "⚔️",         // crossed swords fallback if unavatar 404s
+    inscribed: "Day XVIII, May 2026",
+    coin: "WARTIME",
+    coinLink: "https://dexscreener.com/pulsechain/" + WARTIME_CA,
     fortune: null,
     fortuneLive: true,
     history: []
