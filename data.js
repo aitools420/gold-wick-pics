@@ -35,7 +35,7 @@ const travellers = [
     name: "King Crumpet",
     nameLink: "https://x.com/chippyfishdish",
     avatar: "🫅",         // crowned royal fallback if unavatar 404s
-    inscribed: "Day XVIII, May 2026",
+    inscribed: "Day XVIII, May MMXXVI",
     coin: "?",
     fortune: null,
     fortuneLive: false,
@@ -46,7 +46,7 @@ const travellers = [
     name: "Ser Tangent",
     nameLink: "https://x.com/OG_TAngent",
     avatar: "🐺",         // wolf-dog face — fallback when unavatar 404s
-    inscribed: "Day XVIII, May 2026",
+    inscribed: "Day XVIII, May MMXXVI",
     coin: "WICK",
     coinLink: "https://dexscreener.com/pulsechain/" + WICK_CA,
     fortune: null,        // filled live from DexScreener
@@ -59,7 +59,7 @@ const travellers = [
     name: "Tha Famous",
     nameLink: "https://x.com/ThaFamousOG",
     avatar: "👑",         // crown for the famous; fallback if unavatar 404s
-    inscribed: "Day XVIII, May 2026",
+    inscribed: "Day XVIII, May MMXXVI",
     coin: "?",
     fortune: null,
     fortuneLive: false,
@@ -70,7 +70,7 @@ const travellers = [
     name: "BaalRock",
     nameLink: "https://x.com/0xBaalRock_FINK",
     avatar: "🗿",         // stone idol fallback if unavatar 404s
-    inscribed: "Day XVIII, May 2026",
+    inscribed: "Day XVIII, May MMXXVI",
     coin: "FINK",
     // coinLink set automatically below if FINK_CA is provided
     coinLink: FINK_CA ? "https://dexscreener.com/pulsechain/" + FINK_CA : null,
@@ -84,7 +84,7 @@ const travellers = [
     name: "Cruisey of the Crypt",
     nameLink: "https://x.com/cryptocruisey",
     avatar: "💀",         // crypt skull fallback if unavatar 404s
-    inscribed: "Day XVIII, May 2026",
+    inscribed: "Day XVIII, May MMXXVI",
     coin: "LORD",
     coinLink: "https://dexscreener.com/pulsechain/" + LORD_CA,
     fortune: null,
@@ -97,7 +97,7 @@ const travellers = [
     name: "HT ARMSTRONG",
     nameLink: "https://x.com/jasonar05746510",
     avatar: "🍑",         // peach fallback if unavatar 404s
-    inscribed: "Day XVIII, May 2026",
+    inscribed: "Day XVIII, May MMXXVI",
     coin: "PEACH",
     coinLink: "https://dexscreener.com/pulsechain/" + PEACH_CA,
     fortune: null,
@@ -110,7 +110,7 @@ const travellers = [
     name: "Vlad the Destroyooor",
     nameLink: "https://x.com/FeelsVlad",
     avatar: "🧛",         // vampire fallback if unavatar 404s
-    inscribed: "Day XVIII, May 2026",
+    inscribed: "Day XVIII, May MMXXVI",
     coin: "?",
     fortune: null,
     fortuneLive: false,
@@ -121,7 +121,7 @@ const travellers = [
     name: "Roman",
     nameLink: "https://x.com/0xRomans",
     avatar: "🏛️",         // Roman temple fallback if unavatar 404s
-    inscribed: "Day XVIII, May 2026",
+    inscribed: "Day XVIII, May MMXXVI",
     coin: "?",
     fortune: null,
     fortuneLive: false,
@@ -132,7 +132,7 @@ const travellers = [
     name: "LARP",
     nameLink: "https://x.com/Bub_Da_LARP",
     avatar: "🎭",         // theatre mask fallback if unavatar 404s
-    inscribed: "Day XVIII, May 2026",
+    inscribed: "Day XVIII, May MMXXVI",
     coin: "?",
     fortune: null,
     fortuneLive: false,
@@ -143,7 +143,7 @@ const travellers = [
     name: "Winston",
     nameLink: "https://x.com/IFindFuckwits",
     avatar: "🧐",         // monocle fallback if unavatar 404s
-    inscribed: "Day XVIII, May 2026",
+    inscribed: "Day XVIII, May MMXXVI",
     coin: "?",
     fortune: null,
     fortuneLive: false,
@@ -154,7 +154,7 @@ const travellers = [
     name: "Ser Skitz",
     nameLink: "https://x.com/SkitzInAction",
     avatar: "🤪",         // zany face fallback if unavatar 404s
-    inscribed: "Day XVIII, May 2026",
+    inscribed: "Day XVIII, May MMXXVI",
     coin: "FSJAL",
     coinLink: "https://dexscreener.com/pulsechain/" + FSJAL_CA,
     fortune: null,
@@ -167,7 +167,7 @@ const travellers = [
     name: "Billy Weakman",
     nameLink: "https://x.com/BillyWeakman",
     avatar: "🐤",         // chick fallback if unavatar 404s
-    inscribed: "Day XVIII, May 2026",
+    inscribed: "Day XVIII, May MMXXVI",
     coin: "?",
     fortune: null,
     fortuneLive: false,
@@ -178,7 +178,7 @@ const travellers = [
     name: "Brother Trade",
     nameLink: "https://x.com/tradebrah",
     avatar: "🤝",
-    inscribed: "Day XVIII, May 2026",
+    inscribed: "Day XVIII, May MMXXVI",
     coin: "RAICHU",
     coinLink: "https://dexscreener.com/pulsechain/" + RAICHU_CA,
     fortune: null,
@@ -191,7 +191,7 @@ const travellers = [
     name: "Gains-Smith",
     nameLink: "https://x.com/CryptoGainsClub",
     avatar: "🔨",         // smith hammer fallback if unavatar 404s
-    inscribed: "Day XVIII, May 2026",
+    inscribed: "Day XVIII, May MMXXVI",
     coin: "HEX",
     coinLink: "https://dexscreener.com/pulsechain/" + HEX_CA,
     fortune: null,
@@ -204,7 +204,7 @@ const travellers = [
     name: "Executioner",
     nameLink: "https://x.com/0xExecute",
     avatar: "🪓",         // axe fallback if unavatar 404s
-    inscribed: "Day XVIII, May 2026",
+    inscribed: "Day XVIII, May MMXXVI",
     coin: "PEWPEW",
     coinLink: "https://dexscreener.com/pulsechain/" + PEWPEW_CA,
     fortune: null,
@@ -217,7 +217,7 @@ const travellers = [
     name: "KASH",
     nameLink: "https://x.com/kashusking420",
     avatar: "💵",         // banknote fallback if unavatar 404s
-    inscribed: "Day XVIII, May 2026",
+    inscribed: "Day XVIII, May MMXXVI",
     coin: "9MM",
     coinLink: "https://dexscreener.com/pulsechain/" + NINEMM_CA,
     fortune: null,
@@ -230,7 +230,7 @@ const travellers = [
     name: "TopCap",
     nameLink: "https://x.com/topcatfinance2",
     avatar: "🎩",         // top hat fallback if unavatar 404s
-    inscribed: "Day XVIII, May 2026",
+    inscribed: "Day XVIII, May MMXXVI",
     coin: "TROLL",
     coinLink: "https://dexscreener.com/pulsechain/" + TROLL_CA,
     fortune: null,
@@ -243,7 +243,7 @@ const travellers = [
     name: "Pesant Pete",
     nameLink: "https://x.com/wartimegeneral",
     avatar: "⚔️",         // crossed swords fallback if unavatar 404s
-    inscribed: "Day XVIII, May 2026",
+    inscribed: "Day XVIII, May MMXXVI",
     coin: "WARTIME",
     coinLink: "https://dexscreener.com/pulsechain/" + WARTIME_CA,
     fortune: null,
