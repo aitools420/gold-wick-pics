@@ -16,6 +16,7 @@ const LORD_CA   = "0xBb815Fc95Cc696299906B19F6f65bACf921B4a0E";  // WARLORD on P
 const PEACH_CA  = "0x3cC6704b0902475587363DEfbD6dAb2ec0581628";  // Freedom of Peach on PulseChain
 const FSJAL_CA  = "0xae8b25B28D3eF3ADe67aD40Fd96af45faad3a271";  // Fsjal on PulseChain
 const WARTIME_CA= "0x85bff9e86865B3ea8B9f59eb60e20eC5c6d21cee";  // WARTIME on PulseChain (Pesant Pete)
+const PEWPEW_CA = "0x9deeaF046e144Fb6304A5ACD2aF142bBfE958030";  // PEWPEW on PulseChain (Executioner)
 
 // Section list (rendered top-to-bottom). Each traveller declares which
 // section it belongs to via its `section` key.
@@ -186,6 +187,18 @@ const travellers = [
     inscribed: "Day XVIII, May 2026",
     coin: "HEX",
     coinLink: "https://dexscreener.com/pulsechain/" + HEX_CA,
+    fortune: null,
+    fortuneLive: true,
+    history: []
+  },
+  {
+    section: "pesantry",
+    name: "Executioner",
+    nameLink: "https://x.com/0xExecute",
+    avatar: "🪓",         // axe fallback if unavatar 404s
+    inscribed: "Day XVIII, May 2026",
+    coin: "PEWPEW",
+    coinLink: "https://dexscreener.com/pulsechain/" + PEWPEW_CA,
     fortune: null,
     fortuneLive: true,
     history: []
