@@ -208,14 +208,18 @@ body::before {
   position: relative;
 }
 .section-banner::before, .section-banner::after {
-  /* iron rivets */
+  /* gold studs */
   content: '';
   position: absolute;
   top: 50%; transform: translateY(-50%);
-  width: 10px; height: 10px;
+  width: 11px; height: 11px;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #94a3b8 0%, #475569 60%, #1e293b 100%);
-  box-shadow: inset 0 -1px 2px rgba(0,0,0,0.5), 0 0 0 1px #0a0f1a;
+  background: radial-gradient(circle at 30% 30%, #fff5c2 0%, #ffd966 45%, #c89020 75%, #6b3a08 100%);
+  box-shadow:
+    inset 0 -1px 2px rgba(80,40,0,0.6),
+    inset 0 1px 1px rgba(255,250,200,0.7),
+    0 0 0 1px var(--gold-dark),
+    0 0 4px rgba(255,200,80,0.55);
 }
 .section-banner::before { left: 8px; }
 .section-banner::after  { right: 8px; }
@@ -1513,24 +1517,29 @@ function paintFortune(i, value) {
 }
 
 async function hydrateLiveFortunes() {
+  const needFetch = [];  // { i, ca } pairs whose cache is stale/missing
   for (let i = 0; i < travellers.length; i++) {
     const t = travellers[i];
     if (!t.fortuneLive) continue;
     const ca = (t.coinLink || '').split('/').pop();
     if (!ca || !ca.startsWith('0x')) continue;
 
-    // 1) Cache hit (≤ 1h old) — paint immediately, skip the network call.
+    // Cache hit (≤ 1h old) — paint immediately, skip the network call.
     const cached = cachedMcap(ca);
     if (cached != null) {
       paintFortune(i, cached);
       continue;
     }
+    needFetch.push({ i, ca });
+  }
 
-    // 2) Cache miss / stale — fetch, store, paint.
+  // Cache misses run in parallel so the slowest fetch is the wall clock.
+  await Promise.all(needFetch.map(async ({ i, ca }) => {
     const mc = await fetchTokenMcap(ca);
     if (mc != null) setCachedMcap(ca, mc);
     paintFortune(i, mc);
-  }
+  }));
+
   // Re-sort the lists once every live fortune has settled.
   renderList();
 }
