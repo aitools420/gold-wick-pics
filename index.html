@@ -978,7 +978,11 @@ function escapeHtml(s) {
   }[c]));
 }
 
-function epochOf(t) { return 1 + (t.history ? t.history.length : 0); }
+function epochOf(t) {
+  // Explicit `epoch` override wins; otherwise derive from history length.
+  if (typeof t.epoch === 'number' && t.epoch >= 1) return t.epoch;
+  return 1 + (t.history ? t.history.length : 0);
+}
 
 // Pull an X / Twitter handle out of a full profile URL (or pass through
 // a bare handle). Returns null if no handle could be derived.

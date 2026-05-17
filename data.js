@@ -250,6 +250,7 @@ const travellers = [
     fortune: null,
     fortuneLive: true,
     entryMcap: 149101,    // snapshot 2026-05-18 — frozen
+    epoch: 5,             // explicit override (V)
     history: []
   },
 
