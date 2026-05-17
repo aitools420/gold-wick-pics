@@ -246,9 +246,9 @@ const travellers = [
     inscribed: "Day XVIII, May MMXXVI",
     coin: "WARTIME",
     coinLink: "https://dexscreener.com/pulsechain/" + WARTIME_CA,
-    fortune: null,
-    fortuneLive: true,
-    entryMcap: 149101,    // snapshot 2026-05-18 — frozen
+    fortune: "irrelevant",
+    fortuneLive: false,   // mcap intentionally labelled, no DS fetch
+    entryMcap: 149101,    // snapshot 2026-05-18 — frozen (library only)
     epoch: 5,             // explicit override (V)
     history: []
   },

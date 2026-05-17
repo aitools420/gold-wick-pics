@@ -1036,7 +1036,9 @@ function entryParts(t, i) {
     : `<div class="coin" data-len="${coinLen}">${escapeHtml(t.coin)}</div>`;
   let fortuneInner;
   if (t.fortune != null) {
-    fortuneInner = `<span class="fortune" data-fortune-cell="${i}">${formatMcap(t.fortune)}</span>`;
+    // String fortunes (e.g. "irrelevant") render verbatim; numbers format as mcap.
+    const display = typeof t.fortune === 'string' ? escapeHtml(t.fortune) : formatMcap(t.fortune);
+    fortuneInner = `<span class="fortune" data-fortune-cell="${i}">${display}</span>`;
   } else if (t.fortuneLive) {
     fortuneInner = `<span class="fortune loading" data-fortune-cell="${i}">…</span>`;
   } else {
