@@ -205,7 +205,7 @@ const travellers = [
     history: []
   },
   {
-    section: "pesantry",
+    section: "court_jesters",
     name: "TopCap",
     nameLink: "https://x.com/topcatfinance2",
     avatar: "🎩",         // top hat fallback if unavatar 404s
