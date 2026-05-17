@@ -1,0 +1,1628 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#2a1610">
+<meta name="robots" content="noindex,nofollow">
+<title>Golden Coins</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🪙%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;500;600;700;900&family=IM+Fell+English+SC&family=IM+Fell+English:ital,wght@0,400;1,400&family=Uncial+Antiqua&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   THE GOLDEN COIN LIST · Hearthstone-style parchment leaderboard
+   ============================================================ */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold-light: #ffe9a0;
+  --gold-mid:   #f0b937;
+  --gold-deep:  #b07710;
+  --gold-dark:  #4a2c08;
+  --wood-light: #6b3a17;
+  --wood-mid:   #4a2410;
+  --wood-dark:  #2a1610;
+  --parchment-light: #f6e6b8;
+  --parchment-mid:   #e9d49a;
+  --parchment-dark:  #c8ab74;
+  --ink:        #3a2410;
+  --ink-dim:    #6b4a26;
+  --wax-red:    #b91c1c;
+  --wax-deep:   #7f1d1d;
+  --gain:       #22c55e;
+  --gain-glow:  rgba(74,222,128,0.7);
+  --loss:       #ef4444;
+  --loss-glow:  rgba(239,68,68,0.7);
+}
+
+html, body {
+  min-height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'IM Fell English', Georgia, serif;
+  color: var(--ink);
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%,   rgba(255,200,100,0.10) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 50% 100%, rgba(0,0,0,0.55)        0%, transparent 70%),
+    repeating-linear-gradient(
+      94deg,
+      #3a2110 0px,  #3a2110 78px,
+      #2c1808 79px, #2c1808 80px,
+      #45291a 81px, #45291a 83px,
+      #2c1808 84px, #2c1808 85px
+    ),
+    linear-gradient(180deg, #4a2810 0%, #1f0e08 100%);
+  background-attachment: fixed, fixed, scroll, fixed;
+  min-height: 100vh;
+  padding: 24px 12px 48px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Soft tavern lantern glow at top */
+body::before {
+  content: '';
+  position: fixed;
+  top: -120px; left: 50%; transform: translateX(-50%);
+  width: 480px; height: 240px;
+  background: radial-gradient(ellipse at center, rgba(255,200,100,0.18) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.screen { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; }
+.screen[hidden] { display: none; }
+
+/* ============================================================
+   BANNER · grand golden ribbon
+   ============================================================ */
+.banner {
+  position: relative;
+  margin: 8px 0 28px;
+  padding: 22px 28px 24px;
+  text-align: center;
+  background:
+    linear-gradient(180deg,
+      #fff2c8 0%,
+      #ffd96a 18%,
+      #f0b937 50%,
+      #c89020 78%,
+      #8a5a08 100%);
+  border-radius: 4px;
+  box-shadow:
+    inset 0 2px 0 rgba(255,250,200,0.7),
+    inset 0 -3px 0 rgba(80,40,0,0.5),
+    inset 0 0 18px rgba(255,220,140,0.4),
+    0 0 0 2px var(--gold-dark),
+    0 0 0 4px var(--gold-deep),
+    0 0 0 6px var(--gold-dark),
+    0 0 32px rgba(255,180,40,0.5),
+    0 10px 28px rgba(0,0,0,0.7);
+}
+.banner::before, .banner::after {
+  content: '';
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #fff5c2 0%, #ffd966 50%, #8a5a08 100%);
+  box-shadow: inset 0 -1px 2px rgba(60,30,0,0.6), 0 0 0 1.5px var(--gold-dark), 0 0 6px rgba(255,200,80,0.6);
+}
+.banner::before { left: 14px; }
+.banner::after  { right: 14px; }
+
+.banner h1 {
+  font-family: 'Cinzel Decorative', serif;
+  font-weight: 900;
+  font-size: clamp(22px, 6.5vw, 38px);
+  letter-spacing: 0.02em;
+  line-height: 1.05;
+  color: #3a1d05;
+  text-shadow:
+    0 1px 0 #fff5c2,
+    0 -1px 0 #6b3a08,
+    1px 1px 0 rgba(255,250,200,0.6),
+    2px 3px 4px rgba(60,30,0,0.4);
+}
+.banner .subtitle {
+  margin-top: 10px;
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: clamp(12px, 3.4vw, 15px);
+  color: #5a2f08;
+  letter-spacing: 0.04em;
+  text-shadow: 0 1px 0 rgba(255,250,200,0.5);
+}
+
+/* ============================================================
+   PARCHMENT · main scroll container
+   ============================================================ */
+.parchment {
+  position: relative;
+  padding: 4px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold-mid) 50%, var(--gold-deep) 100%);
+  box-shadow:
+    0 0 0 2px var(--gold-dark),
+    0 0 24px rgba(0,0,0,0.5),
+    0 12px 32px rgba(0,0,0,0.7);
+}
+.parchment-inner {
+  position: relative;
+  padding: 22px 14px 28px;
+  border-radius: 4px;
+  background:
+    radial-gradient(ellipse 80% 60% at 30% 10%, rgba(255,255,255,0.22) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 90%, rgba(120,80,30,0.20) 0%, transparent 60%),
+    linear-gradient(135deg, var(--parchment-light) 0%, var(--parchment-mid) 50%, var(--parchment-dark) 100%);
+  box-shadow:
+    inset 0 0 40px rgba(120,80,30,0.25),
+    inset 0 0 80px rgba(60,30,10,0.18),
+    inset 0 2px 6px rgba(60,30,10,0.18);
+}
+/* Parchment edge wear — corner stains */
+.parchment-inner::before, .parchment-inner::after {
+  content: '';
+  position: absolute;
+  width: 40%; height: 40%;
+  pointer-events: none;
+}
+.parchment-inner::before {
+  top: 0; left: 0;
+  background: radial-gradient(circle at 0% 0%, rgba(120,70,20,0.18) 0%, transparent 60%);
+}
+.parchment-inner::after {
+  bottom: 0; right: 0;
+  background: radial-gradient(circle at 100% 100%, rgba(120,70,20,0.18) 0%, transparent 60%);
+}
+
+/* ============================================================
+   LIST SECTION · grouping (Crowned Crumpets, etc.)
+   ============================================================ */
+.list-section { margin: 0 0 28px; }
+.list-section:last-child { margin-bottom: 0; }
+
+.section-banner {
+  display: block;
+  width: -moz-fit-content;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto 14px;
+  padding: 10px 26px 12px;
+  text-align: center;
+  background: linear-gradient(180deg, #6b3a17 0%, #4a2410 55%, #3d1f0d 100%);
+  border-radius: 6px;
+  box-shadow:
+    inset 0 2px 4px rgba(255,200,100,0.20),
+    inset 0 -3px 6px rgba(0,0,0,0.6),
+    0 0 0 1.5px var(--gold-dark),
+    0 0 0 3px var(--gold-deep),
+    0 0 0 4.5px var(--gold-dark),
+    0 0 18px rgba(255,170,60,0.18),
+    0 6px 14px rgba(0,0,0,0.55);
+  position: relative;
+}
+.section-banner::before, .section-banner::after {
+  /* iron rivets */
+  content: '';
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #94a3b8 0%, #475569 60%, #1e293b 100%);
+  box-shadow: inset 0 -1px 2px rgba(0,0,0,0.5), 0 0 0 1px #0a0f1a;
+}
+.section-banner::before { left: 8px; }
+.section-banner::after  { right: 8px; }
+.section-banner h2 {
+  font-family: 'Cinzel Decorative', serif;
+  font-weight: 900;
+  font-size: clamp(15px, 4.4vw, 21px);
+  letter-spacing: 0.06em;
+  color: var(--gold-light);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.85), 0 0 8px rgba(255,180,40,0.28);
+  margin: 0;
+}
+
+.entries-empty {
+  text-align: center;
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: clamp(13px, 3.6vw, 15px);
+  color: var(--ink-dim);
+  padding: 18px 8px;
+}
+
+/* ============================================================
+   ENTRY CARD · each traveller row
+   ============================================================ */
+.entries, #history { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 18px; }
+
+.entry {
+  position: relative;
+  padding: 3px;
+  border-radius: 5px;
+  background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold-mid) 45%, var(--gold-deep) 100%);
+  box-shadow:
+    0 0 0 1.5px var(--gold-dark),
+    0 0 14px rgba(255,180,40,0.18),
+    0 6px 14px rgba(60,30,10,0.35);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.entry:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 1.5px var(--gold-dark),
+    0 0 22px rgba(255,200,80,0.32),
+    0 10px 18px rgba(60,30,10,0.45);
+}
+.entry-body {
+  background:
+    radial-gradient(ellipse 70% 50% at 30% 10%, rgba(255,255,255,0.18) 0%, transparent 70%),
+    linear-gradient(145deg, #f0dba5 0%, #d9c084 100%);
+  border-radius: 3px;
+  padding: 14px 14px 16px;
+  box-shadow: inset 0 1px 2px rgba(60,30,10,0.15);
+}
+
+/* Single-row layout — avatar | name+date | coin | fortune | seal */
+.entry-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.entry-row > * { flex-shrink: 0; }
+.entry-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.entry-text .entry-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.entry-text .entry-date {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.avatar {
+  flex-shrink: 0;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 30% 30%, #6b4226 0%, #3d2410 70%, #2a1810 100%);
+  box-shadow:
+    inset 0 -3px 6px rgba(0,0,0,0.5),
+    inset 0 3px 4px rgba(255,200,120,0.20),
+    0 0 0 2px var(--gold-deep),
+    0 0 0 3.5px var(--gold-dark),
+    0 0 0 5px var(--gold-mid),
+    0 0 0 6.5px var(--gold-dark),
+    0 4px 8px rgba(0,0,0,0.45);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 30px;
+  line-height: 1;
+  text-decoration: none;
+}
+a.avatar { cursor: pointer; transition: transform 0.15s, filter 0.15s; }
+a.avatar:hover { transform: scale(1.06) rotate(-3deg); filter: brightness(1.15); }
+a.avatar:active { transform: scale(0.97); }
+.avatar-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.avatar-fallback { display: none; }
+.entry-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-weight: 700;
+  font-size: clamp(14px, 4.2vw, 18px);
+  color: var(--ink);
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+  text-shadow: 0 1px 0 rgba(255,250,200,0.5);
+  text-decoration: none;
+}
+a.entry-name { display: inline-block; cursor: pointer; transition: color 0.15s, text-shadow 0.15s; }
+a.entry-name:hover { color: #8a5a08; text-shadow: 0 0 6px rgba(255,180,40,0.5), 0 1px 0 rgba(255,250,200,0.5); }
+.entry-date {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: clamp(10px, 3.2vw, 12px);
+  color: var(--ink-dim);
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+}
+
+/* Labels — small SCRIBED tags */
+.label {
+  font-family: 'IM Fell English SC', serif;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: #7a5018;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+/* ============================================================
+   STACKED LAYOUT · the original (pre-single-row) entry format
+   Opt-in via traveller.layout = 'stacked'. Vertical: head row
+   (avatar + name + date) sits above a coin / fortune / seal grid.
+   ============================================================ */
+.entry.stacked .entry-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1.5px dashed rgba(120,70,20,0.4);
+  margin-bottom: 14px;
+}
+.entry.stacked .avatar { width: 58px; height: 58px; font-size: 30px; }
+.entry.stacked .entry-head-text { flex: 1; min-width: 0; }
+.entry.stacked .entry-head-text .label { margin-top: 2px; }
+.entry.stacked .entry-head-text .label:first-child { margin-top: 0; }
+.entry.stacked .entry-name {
+  font-size: clamp(16px, 4.6vw, 20px);
+  line-height: 1.15;
+  white-space: normal;
+  text-overflow: clip;
+  overflow: visible;
+}
+.entry.stacked .entry-date {
+  font-size: clamp(12px, 3.6vw, 14px);
+  white-space: normal;
+  text-overflow: clip;
+  overflow: visible;
+}
+.entry.stacked .entry-grid {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+}
+.entry.stacked .coin-block,
+.entry.stacked .fortune-block,
+.entry.stacked .epoch-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.entry.stacked .fortune-block { align-items: flex-start; padding-left: 6px; }
+.entry.stacked .fortune-block .label { align-self: flex-start; }
+.entry.stacked .coin {
+  width: 84px; height: 84px; font-size: 17px; letter-spacing: 0.04em;
+  box-shadow:
+    inset 0 -4px 8px rgba(80,40,0,0.55),
+    inset 0 4px 8px rgba(255,250,200,0.55),
+    inset 0 0 0 3px #b07710,
+    inset 0 0 0 4px #6b3a08,
+    0 0 0 1.5px var(--gold-dark),
+    0 0 14px rgba(255,180,40,0.55),
+    0 6px 12px rgba(0,0,0,0.5);
+}
+.entry.stacked .coin::before { top: 6px; font-size: 8px; }
+.entry.stacked .coin::after  { bottom: 6px; font-size: 8px; }
+.entry.stacked .fortune { font-size: clamp(22px, 6vw, 28px); }
+.entry.stacked .seal { width: 64px; height: 64px; font-size: 16px; letter-spacing: 0.08em; }
+@media (max-width: 380px) {
+  .entry.stacked .entry-body { padding: 14px 12px 16px; }
+  .entry.stacked .avatar { width: 50px; height: 50px; font-size: 26px; }
+  .entry.stacked .coin { width: 72px; height: 72px; font-size: 15px; }
+  .entry.stacked .seal { width: 56px; height: 56px; font-size: 15px; }
+  .entry.stacked .entry-grid { gap: 10px; }
+}
+@media (min-width: 760px) {
+  .entry.stacked .entry-body { padding: 18px 22px 20px; }
+  .entry.stacked .avatar { width: 64px; height: 64px; font-size: 32px; }
+  .entry.stacked .coin { width: 96px; height: 96px; font-size: 19px; }
+  .entry.stacked .seal { width: 72px; height: 72px; font-size: 18px; }
+}
+
+/* The Coin — glowing embossed gold disc */
+.coin {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 28%, #fff8d0 0%, #ffe17a 22%, #f0b937 55%, #b07710 88%, #6b3a08 100%);
+  box-shadow:
+    inset 0 -3px 6px rgba(80,40,0,0.55),
+    inset 0 3px 6px rgba(255,250,200,0.55),
+    inset 0 0 0 2px #b07710,
+    inset 0 0 0 3px #6b3a08,
+    0 0 0 1.5px var(--gold-dark),
+    0 0 12px rgba(255,180,40,0.55),
+    0 5px 10px rgba(0,0,0,0.5);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cinzel Decorative', serif;
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: #4a2c08;
+  text-shadow:
+    0 1px 0 #fff5c2,
+    0 -1px 0 #6b3a08;
+  position: relative;
+  animation: coinShimmer 4s ease-in-out infinite;
+  text-decoration: none;
+}
+a.coin { cursor: pointer; transition: transform 0.15s, filter 0.15s; }
+a.coin:hover { transform: scale(1.06) rotate(-3deg); filter: brightness(1.1); }
+a.coin:active { transform: scale(0.97); }
+
+/* Length-aware ticker sizing — shrink the text on longer tickers so
+   it fits cleanly inside the gold disc. Tuned per breakpoint /
+   per layout (stacked discs are larger so the reduction is gentler). */
+.coin[data-len="6"]              { font-size: 11px; letter-spacing: 0; }
+.coin[data-len="7"]              { font-size: 10px; letter-spacing: -0.01em; }
+.entry.stacked .coin[data-len="6"] { font-size: 14px; letter-spacing: 0.02em; }
+.entry.stacked .coin[data-len="7"] { font-size: 13px; letter-spacing: 0; }
+@media (max-width: 380px) {
+  .coin[data-len="6"]            { font-size: 9px; }
+  .coin[data-len="7"]            { font-size: 8.5px; }
+}
+@media (min-width: 760px) {
+  .coin[data-len="6"]            { font-size: 13px; }
+  .coin[data-len="7"]            { font-size: 12px; }
+  .entry.stacked .coin[data-len="6"] { font-size: 16px; }
+  .entry.stacked .coin[data-len="7"] { font-size: 14px; }
+}
+.coin::before {
+  content: '★';
+  position: absolute; top: 3px; left: 50%; transform: translateX(-50%);
+  font-size: 6px; color: rgba(74,44,8,0.5);
+}
+.coin::after {
+  content: '★';
+  position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%);
+  font-size: 6px; color: rgba(74,44,8,0.5);
+}
+@keyframes coinShimmer {
+  0%,100% { filter: drop-shadow(0 0 0 transparent); }
+  50%     { filter: drop-shadow(0 0 8px rgba(255,220,120,0.4)); }
+}
+
+/* Fortune — bold market cap, polished gold-on-black ingot plate */
+/* Coin + Fortune grouping. On desktop they sit side-by-side; on
+   mobile the wrapper flips to column so the fortune plate tucks
+   under the coin disc — frees ~100px of horizontal space for the
+   name + date column. */
+.coin-fortune-stack {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* Row layout label + plate stack (single-row entries only).
+   Fixed width per breakpoint so the column to the LEFT (the coin)
+   lines up under itself across every entry in a section. */
+.fortune-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+  width: 96px;
+}
+
+/* Fortune plate — chunky black "ingot" rectangle that the gold text sits in */
+.fortune-plate {
+  display: inline-block;
+  padding: 4px 10px 5px;
+  border-radius: 5px;
+  background: linear-gradient(180deg, #1a1208 0%, #0a0604 55%, #050302 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,200,80,0.35),
+    inset 0 -1px 0 rgba(0,0,0,0.85),
+    inset 0 0 0 1px rgba(180,120,20,0.55),
+    0 0 0 1px rgba(0,0,0,0.6),
+    0 2px 6px rgba(0,0,0,0.55);
+  line-height: 1;
+  white-space: nowrap;
+}
+/* Fortune — polished gold gradient text inside the plate */
+.fortune {
+  display: inline-block;
+  font-family: 'Cinzel Decorative', serif;
+  font-weight: 900;
+  font-size: clamp(14px, 4vw, 18px);
+  letter-spacing: 0.02em;
+  background: linear-gradient(180deg,
+    #fff5c2  0%,
+    #ffe17a 22%,
+    #f0b937 48%,
+    #c89020 78%,
+    #6b3a08 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* Fallback so the number is visible if a browser ignores background-clip:text */
+  color: #f0b937;
+  filter:
+    drop-shadow(0 1px 0 rgba(255,250,200,0.4))
+    drop-shadow(0 0 4px rgba(255,180,40,0.45));
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+.fortune.loading {
+  background: none;
+  -webkit-text-fill-color: rgba(240,210,150,0.75);
+  color: rgba(240,210,150,0.75);
+  filter: none;
+  font-style: italic;
+  font-size: clamp(12px, 3.4vw, 14px);
+}
+
+/* Wax seal · Roman numeral Epoch button
+   Color is hue-driven by inline style --seal-hue (set per-entry by JS):
+   epoch 1 → 120° green ··· 10 → 0° red, sweeping through yellow + orange. */
+.seal {
+  --seal-hue: 0;
+  width: 46px; height: 46px;
+  border: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 28%,
+      hsl(var(--seal-hue) 92% 70%)  0%,
+      hsl(var(--seal-hue) 88% 50%) 30%,
+      hsl(var(--seal-hue) 85% 35%) 60%,
+      hsl(var(--seal-hue) 80% 22%) 100%);
+  box-shadow:
+    inset 0 -3px 6px rgba(0,0,0,0.55),
+    inset 0 3px 6px hsla(var(--seal-hue), 90%, 78%, 0.42),
+    inset 0 0 0 1px hsl(var(--seal-hue) 78% 14%),
+    0 0 0 1.5px hsl(var(--seal-hue) 80% 8%),
+    0 0 14px hsla(var(--seal-hue), 85%, 50%, 0.5),
+    0 6px 12px rgba(0,0,0,0.55);
+  font-family: 'Cinzel', serif;
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: #ffe9a0;
+  text-shadow:
+    0 1px 0 hsl(var(--seal-hue) 70% 14%),
+    0 -1px 0 hsl(var(--seal-hue) 70% 9%),
+    0 2px 4px rgba(0,0,0,0.7);
+  display: flex; align-items: center; justify-content: center;
+  cursor: default;
+  padding: 0;
+  position: relative;
+  transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
+}
+.seal::before {
+  /* decorative rim ring */
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  border: 1px dashed hsla(var(--seal-hue), 80%, 82%, 0.28);
+  pointer-events: none;
+}
+.seal.clickable {
+  cursor: pointer;
+  animation: sealPulse 2.6s ease-in-out infinite;
+}
+.seal.clickable:hover, .seal.clickable:focus-visible {
+  transform: scale(1.06) rotate(-2deg);
+  filter: brightness(1.15);
+  box-shadow:
+    inset 0 -3px 6px rgba(0,0,0,0.55),
+    inset 0 3px 6px hsla(var(--seal-hue), 90%, 82%, 0.6),
+    inset 0 0 0 1px hsl(var(--seal-hue) 78% 14%),
+    0 0 0 1.5px hsl(var(--seal-hue) 80% 8%),
+    0 0 22px hsla(var(--seal-hue), 90%, 58%, 0.78),
+    0 8px 16px rgba(0,0,0,0.6);
+  outline: none;
+}
+.seal.clickable:active { transform: scale(0.98); }
+@keyframes sealPulse {
+  0%, 100% { box-shadow:
+    inset 0 -3px 6px rgba(0,0,0,0.55),
+    inset 0 3px 6px hsla(var(--seal-hue), 90%, 78%, 0.42),
+    inset 0 0 0 1px hsl(var(--seal-hue) 78% 14%),
+    0 0 0 1.5px hsl(var(--seal-hue) 80% 8%),
+    0 0 14px hsla(var(--seal-hue), 85%, 50%, 0.5),
+    0 6px 12px rgba(0,0,0,0.55); }
+  50%      { box-shadow:
+    inset 0 -3px 6px rgba(0,0,0,0.55),
+    inset 0 3px 6px hsla(var(--seal-hue), 90%, 78%, 0.42),
+    inset 0 0 0 1px hsl(var(--seal-hue) 78% 14%),
+    0 0 0 1.5px hsl(var(--seal-hue) 80% 8%),
+    0 0 24px hsla(var(--seal-hue), 92%, 58%, 0.88),
+    0 6px 12px rgba(0,0,0,0.55); }
+}
+
+/* ============================================================
+   SCREEN 2 · Detail (Tale of Past Hoards)
+   ============================================================ */
+.plaque {
+  position: relative;
+  margin: 0 0 22px;
+  padding: 18px 24px 20px;
+  text-align: center;
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, #6b3a17 0%, #4a2410 55%, #3d1f0d 100%);
+  box-shadow:
+    inset 0 2px 4px rgba(255,200,100,0.18),
+    inset 0 -3px 6px rgba(0,0,0,0.6),
+    0 0 0 1.5px var(--gold-dark),
+    0 0 0 3.5px var(--gold-deep),
+    0 0 0 5px var(--gold-dark),
+    0 0 22px rgba(255,170,60,0.18),
+    0 10px 24px rgba(0,0,0,0.7);
+}
+.plaque::before, .plaque::after {
+  /* iron-stud rivets */
+  content: '';
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #94a3b8 0%, #475569 60%, #1e293b 100%);
+  box-shadow: inset 0 -1px 2px rgba(0,0,0,0.5), 0 0 0 1px #0a0f1a;
+}
+.plaque::before { left: 10px; }
+.plaque::after  { right: 10px; }
+.plaque h2 {
+  font-family: 'Uncial Antiqua', 'Cinzel Decorative', serif;
+  font-size: clamp(18px, 5.2vw, 24px);
+  letter-spacing: 0.04em;
+  color: var(--gold-light);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.85), 0 0 8px rgba(255,180,40,0.25);
+}
+.plaque .traveller-name {
+  margin-top: 6px;
+  font-family: 'IM Fell English SC', serif;
+  letter-spacing: 0.14em;
+  font-size: clamp(11px, 3.4vw, 13px);
+  color: #f0d49a;
+  text-transform: uppercase;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+}
+
+/* Hoard list */
+.hoard {
+  position: relative;
+  padding: 3px;
+  border-radius: 5px;
+  background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold-mid) 45%, var(--gold-deep) 100%);
+  box-shadow:
+    0 0 0 1.5px var(--gold-dark),
+    0 4px 10px rgba(60,30,10,0.4);
+}
+.hoard-inner {
+  background:
+    radial-gradient(ellipse 70% 50% at 30% 10%, rgba(255,255,255,0.18) 0%, transparent 70%),
+    linear-gradient(145deg, #f0dba5 0%, #d9c084 100%);
+  border-radius: 3px;
+  padding: 14px 16px;
+  box-shadow: inset 0 1px 2px rgba(60,30,10,0.15);
+}
+.hoard-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-weight: 900;
+  font-size: clamp(18px, 4.8vw, 22px);
+  text-align: center;
+  background: linear-gradient(180deg, #c89020 0%, #6b3a08 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.05em;
+  margin-bottom: 10px;
+  text-shadow: 0 1px 0 rgba(255,250,200,0.4);
+  filter: drop-shadow(0 1px 1px rgba(60,30,10,0.35));
+}
+.hoard-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 8px 0;
+  border-top: 1.5px dashed rgba(120,70,20,0.4);
+  border-bottom: 1.5px dashed rgba(120,70,20,0.4);
+}
+.hoard-row > div { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.hoard-row .value {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: clamp(15px, 4.2vw, 18px);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+.spoils-row {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.spoils {
+  font-family: 'Cinzel Decorative', serif;
+  font-weight: 900;
+  font-size: clamp(26px, 7vw, 34px);
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+.spoils.gain {
+  color: #4ade80;
+  text-shadow:
+    -1.2px -1.2px 0 #14532d,
+     1.2px -1.2px 0 #14532d,
+    -1.2px  1.2px 0 #14532d,
+     1.2px  1.2px 0 #14532d,
+    0 0 10px var(--gain-glow),
+    0 2px 0 #166534;
+}
+.spoils.loss {
+  color: #fb7185;
+  text-shadow:
+    -1.2px -1.2px 0 #5a0a0a,
+     1.2px -1.2px 0 #5a0a0a,
+    -1.2px  1.2px 0 #5a0a0a,
+     1.2px  1.2px 0 #5a0a0a,
+    0 0 10px var(--loss-glow),
+    0 2px 0 #7f1d1d;
+}
+
+/* Back button — chunky wooden carved arrow */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 0;
+  padding: 12px 22px 14px 18px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  background:
+    linear-gradient(180deg, #7a4520 0%, #4a2410 55%, #3d1f0d 100%);
+  border-radius: 6px;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+  box-shadow:
+    inset 0 2px 4px rgba(255,200,100,0.22),
+    inset 0 -3px 6px rgba(0,0,0,0.55),
+    0 0 0 1.5px var(--gold-dark),
+    0 0 0 3px var(--gold-deep),
+    0 0 0 4.5px var(--gold-dark),
+    0 6px 14px rgba(0,0,0,0.6);
+  transition: transform 0.12s, filter 0.12s;
+}
+.back-btn:hover, .back-btn:focus-visible { filter: brightness(1.12); outline: none; }
+.back-btn:active { transform: translateY(1px); }
+.back-btn .arrow {
+  width: 22px; height: 22px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: radial-gradient(circle at 30% 30%, #fff5c2 0%, #ffd966 50%, #8a5a08 100%);
+  border-radius: 50%;
+  font-size: 14px;
+  color: #4a2c08;
+  box-shadow: inset 0 -1px 2px rgba(60,30,0,0.6), 0 0 0 1.5px var(--gold-dark);
+  line-height: 1;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  position: relative; z-index: 1;
+  max-width: 720px;
+  margin: 28px auto 0;
+  text-align: center;
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 22px;
+  letter-spacing: 0.06em;
+  line-height: 1.35;
+  color: rgba(240,210,150,0.65);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+}
+footer a { color: rgba(255,230,170,0.85); text-decoration: none; }
+footer a:hover { color: var(--gold-light); }
+footer .disclaimer {
+  max-width: 640px;
+  margin: 16px auto 0;
+  padding-top: 14px;
+  border-top: 1px solid rgba(180,120,20,0.28);
+  font-size: 18px;
+  line-height: 1.5;
+  letter-spacing: 0.03em;
+  color: rgba(240,210,150,0.55);
+}
+
+/* ============================================================
+   RESPONSIVE — extra-narrow phones
+   ============================================================ */
+@media (max-width: 380px) {
+  body { padding: 16px 8px 36px; }
+  .banner { padding: 18px 22px 20px; }
+  .parchment-inner { padding: 18px 8px 22px; }
+  .entry-body { padding: 10px 8px 12px; }
+  .entry-row { gap: 7px; }
+  .avatar { width: 38px; height: 38px; font-size: 22px; }
+  .coin { width: 48px; height: 48px; font-size: 11px; }
+  .seal { width: 42px; height: 42px; font-size: 12px; }
+  .fortune-col { width: 78px; }
+}
+
+/* Mobile: drop the Epoch wax-seal from the single-row layout and
+   stack the coin + fortune vertically. The fortune label is hidden
+   and the mcap text shrinks; the wrapper carries a fixed width so
+   every entry's coin lines up under the others across the section.
+   Stacked-layout entries (Sage Therion) are unaffected — their seal
+   and fortune sit inside .epoch-block / .fortune-block, not inside
+   .entry-row. */
+@media (max-width: 600px) {
+  .entry-row .seal { display: none; }
+  .entry-row .coin-fortune-stack {
+    flex-direction: column;
+    gap: 4px;
+    width: 70px;
+  }
+  .coin-fortune-stack .fortune-col {
+    width: 100%;
+    align-items: center;
+  }
+  .coin-fortune-stack .fortune-col .label { display: none; }
+  .coin-fortune-stack .fortune { font-size: 11.5px; }
+  .coin-fortune-stack .fortune-plate { padding: 3px 7px 4px; border-radius: 4px; }
+}
+@media (max-width: 380px) {
+  .entry-row .coin-fortune-stack { width: 62px; }
+  .coin-fortune-stack .fortune { font-size: 10.5px; }
+  .coin-fortune-stack .fortune-plate { padding: 2px 6px 3px; }
+}
+
+@media (min-width: 760px) {
+  .coin-fortune-stack { gap: 18px; }
+}
+
+/* Larger screens — desktop view */
+@media (min-width: 760px) {
+  body { padding: 36px 16px 60px; }
+  .entry-body { padding: 16px 22px 18px; }
+  .entry-row { gap: 18px; }
+  .avatar { width: 56px; height: 56px; font-size: 30px; }
+  .coin { width: 72px; height: 72px; font-size: 16px; }
+  .seal { width: 60px; height: 60px; font-size: 16px; }
+  .fortune-col { width: 120px; }
+  .hoard-inner { padding: 18px 22px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     SCREEN 1 · The Golden Coin List
+     ============================================================ -->
+<section id="screen-main" class="screen">
+  <header class="banner">
+    <h1>Golden Coins</h1>
+    <div class="subtitle">A ledger of bold travellers and the fortunes they seek</div>
+  </header>
+
+  <div id="sections"></div>
+</section>
+
+<!-- ============================================================
+     SCREEN 2 · Tale of Past Hoards
+     ============================================================ -->
+<section id="screen-detail" class="screen" hidden>
+  <button class="back-btn" type="button" onclick="closeDetail()" aria-label="Return to the Golden Coin List">
+    <span class="arrow" aria-hidden="true">◄</span>
+    <span>Return</span>
+  </button>
+
+  <div class="plaque">
+    <h2>Tale of Past Hoards</h2>
+    <div class="traveller-name" id="detail-name">—</div>
+  </div>
+
+  <div class="parchment">
+    <div class="parchment-inner">
+      <div id="history"></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>Inscribed by the keeper of <a href="https://meta.wick.pics/">wick pics</a></div>
+  <div class="disclaimer">these tokens are not endorsed by these users beyond just being their current favorite coins, these users are not necessarily the devs of these tokens, coins can go up or down, none of this is financial advice</div>
+</footer>
+
+<script>
+/* ============================================================
+   DATA · travellers (test case = single entry)
+   Each traveller's `epoch` = 1 + history.length. Epoch > 1 makes
+   the wax-seal button clickable to open the past-hoards screen.
+   ============================================================ */
+const WICK_CA   = "0x8CDaf3d630Da9E1450832924D5701CC0500E9cfC";
+const HEX_CA    = "0x2b591e99afe9F32eAA6214f7B7629768c40Eeb39";
+const RAICHU_CA = "0xa6cFfE8Bc798628573a3e91Ed84EfD92D6D8e8B0";
+const DPEPE_CA  = "0xE9e15d6F7380D1718a3bdeeE720eE979fAC1F5BC";
+const FINK_CA   = "0x578f94F729D41983b77a07650517479e409c329B";  // BaalRock's PulseChain token
+const LORD_CA   = "0xBb815Fc95Cc696299906B19F6f65bACf921B4a0E";  // WARLORD on PulseChain
+const PEACH_CA  = "0x3cC6704b0902475587363DEfbD6dAb2ec0581628";  // Freedom of Peach on PulseChain
+const FSJAL_CA  = "0xae8b25B28D3eF3ADe67aD40Fd96af45faad3a271";  // Fsjal on PulseChain
+
+// Section list (rendered top-to-bottom). Each traveller declares which
+// section it belongs to via its `section` key.
+const sections = [
+  { key: "crowned",   title: "Crowned Crumpets"     },
+  { key: "pesantry",  title: "PulseChain Pesantry"  },
+  { key: "test",      title: "Test Tourney"         }
+];
+
+const travellers = [
+  {
+    section: "crowned",
+    pinTop: true,         // always lock to the top of the Crowned Crumpets list
+    name: "King Crumpet",
+    nameLink: "https://x.com/chippyfishdish",
+    avatar: "🫅",         // crowned royal fallback if unavatar 404s
+    inscribed: "Day XVIII, May 2026",
+    coin: "?",
+    fortune: null,
+    fortuneLive: false,
+    history: []
+  },
+  {
+    section: "crowned",
+    name: "Ser Tangent",
+    nameLink: "https://x.com/OG_TAngent",
+    avatar: "🐺",         // wolf-dog face — fallback when unavatar 404s
+    inscribed: "Day XVIII, May 2026",
+    coin: "WICK",
+    coinLink: "https://dexscreener.com/pulsechain/" + WICK_CA,
+    fortune: null,        // filled live from DexScreener
+    fortuneLive: true,
+    history: []           // Epoch I — no past hoards
+  },
+  {
+    section: "crowned",
+    name: "Tha Famous",
+    nameLink: "https://x.com/ThaFamousOG",
+    avatar: "👑",         // crown for the famous; fallback if unavatar 404s
+    inscribed: "Day XVIII, May 2026",
+    coin: "?",
+    fortune: null,
+    fortuneLive: false,
+    history: []
+  },
+  {
+    section: "pesantry",
+    name: "BaalRock",
+    nameLink: "https://x.com/0xBaalRock_FINK",
+    avatar: "🗿",         // stone idol fallback if unavatar 404s
+    inscribed: "Day XVIII, May 2026",
+    coin: "FINK",
+    // coinLink set automatically below if FINK_CA is provided
+    coinLink: FINK_CA ? "https://dexscreener.com/pulsechain/" + FINK_CA : null,
+    fortune: null,
+    fortuneLive: !!FINK_CA,
+    history: []
+  },
+  {
+    section: "crowned",
+    name: "Cruisey of the Crypt",
+    nameLink: "https://x.com/cryptocruisey",
+    avatar: "💀",         // crypt skull fallback if unavatar 404s
+    inscribed: "Day XVIII, May 2026",
+    coin: "LORD",
+    coinLink: "https://dexscreener.com/pulsechain/" + LORD_CA,
+    fortune: null,
+    fortuneLive: true,
+    history: []
+  },
+  {
+    section: "crowned",
+    name: "HT ARMSTRONG",
+    nameLink: "https://x.com/jasonar05746510",
+    avatar: "🍑",         // peach fallback if unavatar 404s
+    inscribed: "Day XVIII, May 2026",
+    coin: "PEACH",
+    coinLink: "https://dexscreener.com/pulsechain/" + PEACH_CA,
+    fortune: null,
+    fortuneLive: true,
+    history: []
+  },
+  {
+    section: "crowned",
+    name: "Vlad the Destroyooor",
+    nameLink: "https://x.com/FeelsVlad",
+    avatar: "🧛",         // vampire fallback if unavatar 404s
+    inscribed: "Day XVIII, May 2026",
+    coin: "?",
+    fortune: null,
+    fortuneLive: false,
+    history: []
+  },
+  {
+    section: "crowned",
+    name: "Roman",
+    nameLink: "https://x.com/0xRomans",
+    avatar: "🏛️",         // Roman temple fallback if unavatar 404s
+    inscribed: "Day XVIII, May 2026",
+    coin: "?",
+    fortune: null,
+    fortuneLive: false,
+    history: []
+  },
+  {
+    section: "crowned",
+    name: "LARP",
+    nameLink: "https://x.com/Bub_Da_LARP",
+    avatar: "🎭",         // theatre mask fallback if unavatar 404s
+    inscribed: "Day XVIII, May 2026",
+    coin: "?",
+    fortune: null,
+    fortuneLive: false,
+    history: []
+  },
+  {
+    section: "crowned",
+    name: "Winston",
+    nameLink: "https://x.com/IFindFuckwits",
+    avatar: "🧐",         // monocle fallback if unavatar 404s
+    inscribed: "Day XVIII, May 2026",
+    coin: "?",
+    fortune: null,
+    fortuneLive: false,
+    history: []
+  },
+  {
+    section: "crowned",
+    name: "Ser Skitz",
+    nameLink: "https://x.com/SkitzInAction",
+    avatar: "🤪",         // zany face fallback if unavatar 404s
+    inscribed: "Day XVIII, May 2026",
+    coin: "FSJAL",
+    coinLink: "https://dexscreener.com/pulsechain/" + FSJAL_CA,
+    fortune: null,
+    fortuneLive: true,
+    history: []
+  },
+  {
+    section: "pesantry",
+    name: "Brother Trade",
+    nameLink: "https://x.com/tradebrah",
+    avatar: "🤝",
+    inscribed: "Day XVIII, May 2026",
+    coin: "RAICHU",
+    coinLink: "https://dexscreener.com/pulsechain/" + RAICHU_CA,
+    fortune: null,
+    fortuneLive: true,
+    history: []
+  },
+  {
+    section: "pesantry",
+    name: "Gains-Smith",
+    nameLink: "https://x.com/CryptoGainsClub",
+    avatar: "🔨",         // smith hammer fallback if unavatar 404s
+    inscribed: "Day XVIII, May 2026",
+    coin: "HEX",
+    coinLink: "https://dexscreener.com/pulsechain/" + HEX_CA,
+    fortune: null,
+    fortuneLive: true,
+    history: []
+  },
+
+  /* ----- TEMPLATE DEMOS · Epoch II through X (color sweep) -----
+     Fictional placeholders showing every seal hue. Delete or move
+     once real travellers populate each epoch. */
+  {
+    section: "test",
+    name: "Brunhilde Stormfist", avatar: "⚔️",
+    inscribed: "Day V, Moon of Forge",
+    coin: "ORCS", fortune: 324_000,
+    history: [
+      { name: "HAMR", forged: 72_000, faded: 188_000 }
+    ]
+  },
+  {
+    section: "test",
+    name: "The Whispering Skald", avatar: "🪶",
+    inscribed: "Day XX, Crimson Moon",
+    coin: "FROG", fortune: 1_180_000,
+    history: [
+      { name: "LUTE", forged: 140_000, faded: 320_000 },
+      { name: "VRSE", forged:  60_000, faded:  18_000 }
+    ]
+  },
+  {
+    section: "test",
+    name: "Cassian Nightmist", avatar: "🗡️",
+    inscribed: "Day VIII, Velvet Moon",
+    coin: "SHRD", fortune: 14_520_000,
+    history: [
+      { name: "FANG", forged: 180_000, faded: 1_100_000 },
+      { name: "VEIL", forged: 620_000, faded:   240_000 },
+      { name: "WISP", forged: 440_000, faded: 3_280_000 }
+    ]
+  },
+  {
+    section: "test",
+    name: "Lyra Faewhisper", avatar: "⭐",
+    inscribed: "Dawn, 1st of Verdant",
+    coin: "DRYAD", fortune: 2_130_000,
+    history: [
+      { name: "GLOW", forged:  90_000, faded:   620_000 },
+      { name: "MOSS", forged: 220_000, faded:    78_000 },
+      { name: "BARK", forged: 410_000, faded: 2_840_000 },
+      { name: "ROOT", forged: 160_000, faded:    44_000 }
+    ]
+  },
+  {
+    section: "test",
+    name: "The Iron Bard", avatar: "⚒️",
+    inscribed: "Last Bell, 11th of Hollow",
+    coin: "ANVL", fortune: 880_000,
+    history: [
+      { name: "FORG", forged:  60_000, faded:   720_000 },
+      { name: "SPRK", forged: 210_000, faded:   860_000 },
+      { name: "PYRE", forged: 480_000, faded:    98_000 },
+      { name: "SOOT", forged:  90_000, faded:    36_000 },
+      { name: "CINR", forged: 320_000, faded: 1_640_000 }
+    ]
+  },
+  {
+    section: "test",
+    name: "Ser Aldric Goldhand", avatar: "🦁",
+    inscribed: "Day XII, Moon of Ash, AC 1247",
+    coin: "DRGN", fortune: 4_200_000,
+    history: [
+      { name: "FROG", forged:    80_000, faded:   420_000 },
+      { name: "GNOM", forged:    50_000, faded:    12_000 },
+      { name: "BARD", forged:   200_000, faded: 1_800_000 },
+      { name: "ORCS", forged:   350_000, faded:   180_000 },
+      { name: "DRAG", forged:   600_000, faded: 4_200_000 },
+      { name: "ANVL", forged: 1_100_000, faded:   880_000 }
+    ]
+  },
+  {
+    section: "test",
+    name: "The Crimson Bandit", avatar: "🛡️",
+    inscribed: "Midnight, 28th of Frost",
+    coin: "STAB", fortune: 640_000,
+    history: [
+      { name: "DAGR", forged: 140_000, faded:   480_000 },
+      { name: "MASK", forged: 220_000, faded:    66_000 },
+      { name: "PURS", forged:  80_000, faded:   910_000 },
+      { name: "SHIV", forged: 310_000, faded:   140_000 },
+      { name: "CLOK", forged: 480_000, faded: 1_220_000 },
+      { name: "OATH", forged: 180_000, faded:    48_000 },
+      { name: "TOLL", forged: 720_000, faded: 2_440_000 }
+    ]
+  },
+  {
+    section: "test",
+    name: "Lady Mireille Emberhall", avatar: "🔥",
+    inscribed: "Eve of Iron Tide, AC 1247",
+    coin: "EMBR", fortune: 69_410_000,
+    history: [
+      { name: "ASH",  forged:   320_000, faded: 1_240_000 },
+      { name: "SCRL", forged:   880_000, faded:   210_000 },
+      { name: "MOTE", forged:   140_000, faded:   780_000 },
+      { name: "WICK", forged:   620_000, faded: 4_400_000 },
+      { name: "PYRA", forged: 1_200_000, faded:   320_000 },
+      { name: "FLAM", forged:   480_000, faded: 6_800_000 },
+      { name: "COAL", forged:   780_000, faded:   210_000 },
+      { name: "SPRK", forged:   140_000, faded: 2_100_000 }
+    ]
+  },
+  {
+    section: "test",
+    name: "The Grand Sovereign", avatar: "👑",
+    inscribed: "Day I of the First Sun, AC MMXLVII",
+    coin: "KING", fortune: 128_000_000,
+    history: [
+      { name: "EMBR", forged:   210_000, faded: 1_120_000 },
+      { name: "SCRL", forged: 1_200_000, faded:   320_000 },
+      { name: "GOLD", forged:   480_000, faded: 8_400_000 },
+      { name: "IRON", forged:   720_000, faded:   180_000 },
+      { name: "ORBE", forged:   140_000, faded: 3_600_000 },
+      { name: "CROW", forged: 2_200_000, faded:    72_000 },
+      { name: "RUNE", forged:   860_000, faded: 5_400_000 },
+      { name: "SHRD", forged: 1_400_000, faded:   320_000 },
+      { name: "WARD", forged: 3_100_000, faded:18_000_000 }
+    ]
+  },
+  {
+    section: "test",
+    layout: "stacked",     // dual-line format demo, at the bottom of the tourney
+    name: "Sage Therion the Wise",
+    avatar: "🌙",
+    inscribed: "Day VII, Moon of Embers",
+    coin: "HEX",
+    coinLink: "https://dexscreener.com/pulsechain/" + HEX_CA,
+    fortune: null,
+    fortuneLive: true,
+    history: [
+      { name: "GRIM", forged:  90_000, faded: 1_100_000 },
+      { name: "TOME", forged: 220_000, faded:   140_000 }
+    ]
+  }
+];
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+function toRoman(num) {
+  const map = [
+    [1000,'M'],[900,'CM'],[500,'D'],[400,'CD'],
+    [100,'C'],[90,'XC'],[50,'L'],[40,'XL'],
+    [10,'X'],[9,'IX'],[5,'V'],[4,'IV'],[1,'I']
+  ];
+  let r = '';
+  for (const [v, s] of map) { while (num >= v) { r += s; num -= v; } }
+  return r || '—';
+}
+
+function formatMcap(n) {
+  if (n >= 1e9) return '$' + (n/1e9).toFixed(2) + 'B';
+  if (n >= 1e6) return '$' + (n/1e6).toFixed(2) + 'M';
+  if (n >= 1e3) return '$' + (n/1e3).toFixed(1) + 'K';
+  return '$' + Math.round(n).toLocaleString();
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+}
+
+function epochOf(t) { return 1 + (t.history ? t.history.length : 0); }
+
+// Pull an X / Twitter handle out of a full profile URL (or pass through
+// a bare handle). Returns null if no handle could be derived.
+function extractXHandle(input) {
+  if (!input) return null;
+  const s = String(input).trim();
+  if (!s.includes('/') && !s.includes('.')) {
+    return s.replace(/^@/, '').replace(/[^A-Za-z0-9_]/g, '') || null;
+  }
+  const m = s.match(/(?:twitter\.com|x\.com)\/(@?[A-Za-z0-9_]+)/i);
+  return m ? m[1].replace('@', '') : null;
+}
+
+// Epoch 1 → 120° (green), 10 → 0° (red); clamped on either side.
+// Smooth sweep through yellow (≈60°) + orange (≈30°) for in-between epochs.
+function sealHue(epoch) {
+  const e = Math.max(1, Math.min(10, epoch));
+  return 120 * (10 - e) / 9;
+}
+
+/* ============================================================
+   RENDER · main list (single-row default, stacked = old format)
+   ============================================================ */
+function entryParts(t, i) {
+  const epoch = epochOf(t);
+  const canOpen = epoch > 1;
+  const roman = toRoman(epoch);
+  const avatarLink = t.avatarLink || t.nameLink || null;
+  const handle = extractXHandle(t.xHandle || avatarLink);
+  const fallbackEmoji = escapeHtml(t.avatar);
+  const avatarInner = handle
+    ? `<img class="avatar-img"
+            src="https://unavatar.io/x/${escapeHtml(handle)}"
+            alt=""
+            referrerpolicy="no-referrer"
+            loading="lazy"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+       <span class="avatar-fallback">${fallbackEmoji}</span>`
+    : fallbackEmoji;
+  const avatarHtml = avatarLink
+    ? `<a class="avatar" href="${escapeHtml(avatarLink)}" target="_blank" rel="noopener" aria-label="${escapeHtml(t.name)} on X">${avatarInner}</a>`
+    : `<div class="avatar" aria-hidden="true">${avatarInner}</div>`;
+  const nameTag = t.nameLink ? 'a' : 'span';
+  const nameAttrs = t.nameLink
+    ? ` href="${escapeHtml(t.nameLink)}" target="_blank" rel="noopener"`
+    : '';
+  const nameHtml = `<${nameTag} class="entry-name"${nameAttrs}>${escapeHtml(t.name)}</${nameTag}>`;
+  const coinLen = (t.coin || '').length;
+  const coinHtml = t.coinLink
+    ? `<a class="coin" data-len="${coinLen}" href="${escapeHtml(t.coinLink)}" target="_blank" rel="noopener" aria-label="${escapeHtml(t.coin)} on DexScreener">${escapeHtml(t.coin)}</a>`
+    : `<div class="coin" data-len="${coinLen}">${escapeHtml(t.coin)}</div>`;
+  let fortuneInner;
+  if (t.fortune != null) {
+    fortuneInner = `<span class="fortune" data-fortune-cell="${i}">${formatMcap(t.fortune)}</span>`;
+  } else if (t.fortuneLive) {
+    fortuneInner = `<span class="fortune loading" data-fortune-cell="${i}">…</span>`;
+  } else {
+    fortuneInner = `<span class="fortune loading" data-fortune-cell="${i}">—</span>`;
+  }
+  const fortuneHtml = `<div class="fortune-plate">${fortuneInner}</div>`;
+  const hue = sealHue(epoch).toFixed(1);
+  const sealHtml = `<button class="seal${canOpen ? ' clickable' : ''}"
+                            type="button"
+                            style="--seal-hue: ${hue}"
+                            ${canOpen
+                              ? `onclick="openDetail(${i})" aria-label="View past hoards of ${escapeHtml(t.name)}"`
+                              : 'disabled aria-label="No past hoards yet"'}>${roman}</button>`;
+  return { avatarHtml, nameHtml, coinHtml, fortuneHtml, sealHtml };
+}
+
+function renderEntryRow(t, i) {
+  const { avatarHtml, nameHtml, coinHtml, fortuneHtml, sealHtml } = entryParts(t, i);
+  return `
+    <article class="entry">
+      <div class="entry-body">
+        <div class="entry-row">
+          ${avatarHtml}
+          <div class="entry-text">
+            <div class="label">Traveller</div>
+            ${nameHtml}
+            <div class="label">Inscribed</div>
+            <span class="entry-date">${escapeHtml(t.inscribed)}</span>
+          </div>
+          <div class="coin-fortune-stack">
+            ${coinHtml}
+            <div class="fortune-col">
+              <div class="label">Fortune</div>
+              ${fortuneHtml}
+            </div>
+          </div>
+          ${sealHtml}
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+function renderEntryStacked(t, i) {
+  const { avatarHtml, nameHtml, coinHtml, fortuneHtml, sealHtml } = entryParts(t, i);
+  return `
+    <article class="entry stacked">
+      <div class="entry-body">
+        <div class="entry-head">
+          ${avatarHtml}
+          <div class="entry-head-text">
+            <div class="label">Traveller</div>
+            ${nameHtml}
+            <div class="label">Inscribed</div>
+            <div class="entry-date">${escapeHtml(t.inscribed)}</div>
+          </div>
+        </div>
+        <div class="entry-grid">
+          <div class="coin-block">
+            <div class="label">Coin</div>
+            ${coinHtml}
+          </div>
+          <div class="fortune-block">
+            <div class="label">Fortune</div>
+            ${fortuneHtml}
+          </div>
+          <div class="epoch-block">
+            <div class="label">Epoch</div>
+            ${sealHtml}
+          </div>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+function renderEntries(sectionKey) {
+  // Preserve the flat travellers index so openDetail(i) still works.
+  const rows = travellers
+    .map((t, i) => ({ t, i }))
+    .filter(({ t }) => (t.section || sections[0].key) === sectionKey);
+  // Sort: pinTop entries first (always top of section), then by current
+  // fortune highest → lowest. Null fortunes sink to the bottom; once
+  // hydrateLiveFortunes resolves them, renderList re-runs and they
+  // slot into their correct rank.
+  rows.sort((a, b) => {
+    const pa = a.t.pinTop ? 1 : 0;
+    const pb = b.t.pinTop ? 1 : 0;
+    if (pa !== pb) return pb - pa;
+    const fa = (typeof a.t.fortune === 'number') ? a.t.fortune : -Infinity;
+    const fb = (typeof b.t.fortune === 'number') ? b.t.fortune : -Infinity;
+    return fb - fa;
+  });
+  if (!rows.length) {
+    return `<div class="entries-empty">No travellers in this list yet.</div>`;
+  }
+  return `<div class="entries">` + rows.map(({ t, i }) =>
+    t.layout === 'stacked' ? renderEntryStacked(t, i) : renderEntryRow(t, i)
+  ).join('') + `</div>`;
+}
+
+function renderList() {
+  const root = document.getElementById('sections');
+  root.innerHTML = sections.map(s => `
+    <div class="list-section">
+      <div class="section-banner"><h2>${escapeHtml(s.title)}</h2></div>
+      <div class="parchment">
+        <div class="parchment-inner">
+          ${renderEntries(s.key)}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ============================================================
+   LIVE FORTUNE · DexScreener marketCap lookup for tokens with
+   `fortuneLive: true`. Picks the PulseChain pair with the most
+   liquidity, prefers marketCap (circulating) over fdv.
+
+   Cached in localStorage per-CA for 1 hour so repeat visits in
+   the same browser skip the DS fetch entirely.
+   ============================================================ */
+const MCAP_CACHE_KEY = 'golden_mcap_cache_v1';
+const MCAP_CACHE_TTL_MS = 60 * 60 * 1000;  // 1 hour
+
+function readMcapCache() {
+  try { return JSON.parse(localStorage.getItem(MCAP_CACHE_KEY) || '{}') || {}; }
+  catch (e) { return {}; }
+}
+function writeMcapCache(cache) {
+  try { localStorage.setItem(MCAP_CACHE_KEY, JSON.stringify(cache)); } catch (e) {}
+}
+function cachedMcap(ca) {
+  const entry = readMcapCache()[ca.toLowerCase()];
+  if (!entry || typeof entry.value !== 'number') return null;
+  if (Date.now() - entry.ts > MCAP_CACHE_TTL_MS) return null;
+  return entry.value;
+}
+function setCachedMcap(ca, value) {
+  const cache = readMcapCache();
+  cache[ca.toLowerCase()] = { value, ts: Date.now() };
+  writeMcapCache(cache);
+}
+
+async function fetchTokenMcap(ca) {
+  try {
+    const r = await fetch('https://api.dexscreener.com/latest/dex/tokens/' + ca, { cache: 'no-store' });
+    if (!r.ok) return null;
+    const d = await r.json();
+    const pairs = (d.pairs || []).filter(p => p && (p.chainId === 'pulsechain' || p.chainId === 'pulse'));
+    if (!pairs.length) return null;
+    pairs.sort((a, b) => (b.liquidity?.usd || 0) - (a.liquidity?.usd || 0));
+    const top = pairs[0];
+    const mc = Number(top.marketCap || top.fdv || 0);
+    return mc > 0 ? mc : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+function paintFortune(i, value) {
+  const cell = document.querySelector(`[data-fortune-cell="${i}"]`);
+  if (!cell) return;
+  if (value != null) {
+    travellers[i].fortune = value;
+    cell.classList.remove('loading');
+    cell.textContent = formatMcap(value);
+  } else {
+    cell.textContent = '—';
+  }
+}
+
+async function hydrateLiveFortunes() {
+  for (let i = 0; i < travellers.length; i++) {
+    const t = travellers[i];
+    if (!t.fortuneLive) continue;
+    const ca = (t.coinLink || '').split('/').pop();
+    if (!ca || !ca.startsWith('0x')) continue;
+
+    // 1) Cache hit (≤ 1h old) — paint immediately, skip the network call.
+    const cached = cachedMcap(ca);
+    if (cached != null) {
+      paintFortune(i, cached);
+      continue;
+    }
+
+    // 2) Cache miss / stale — fetch, store, paint.
+    const mc = await fetchTokenMcap(ca);
+    if (mc != null) setCachedMcap(ca, mc);
+    paintFortune(i, mc);
+  }
+  // Re-sort the lists once every live fortune has settled.
+  renderList();
+}
+
+/* ============================================================
+   RENDER · detail screen
+   ============================================================ */
+function openDetail(index) {
+  const t = travellers[index];
+  if (!t || !t.history || t.history.length === 0) return;
+
+  document.getElementById('detail-name').textContent = t.name;
+
+  const history = document.getElementById('history');
+  // Show newest first (most recent past hoard at top)
+  const ordered = t.history.slice().reverse();
+  history.innerHTML = ordered.map(h => {
+    const pct = ((h.faded - h.forged) / h.forged) * 100;
+    const gain = pct >= 0;
+    const pctStr = (gain ? '+' : '') + pct.toFixed(1) + '%';
+    return `
+      <article class="hoard">
+        <div class="hoard-inner">
+          <div class="hoard-name">${escapeHtml(h.name)}</div>
+          <div class="hoard-row">
+            <div>
+              <div class="label">Fortune Forged</div>
+              <div class="value">${formatMcap(h.forged)}</div>
+            </div>
+            <div>
+              <div class="label">Fortune Faded</div>
+              <div class="value">${formatMcap(h.faded)}</div>
+            </div>
+          </div>
+          <div class="spoils-row">
+            <div class="label">Spoils</div>
+            <div class="spoils ${gain ? 'gain' : 'loss'}">${pctStr}</div>
+          </div>
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  document.getElementById('screen-main').hidden = true;
+  document.getElementById('screen-detail').hidden = false;
+  window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+
+  if (location.hash !== '#t' + index) {
+    history.dataset.index = String(index);
+    history_pushHash('#t' + index);
+  }
+}
+
+function closeDetail() {
+  document.getElementById('screen-detail').hidden = true;
+  document.getElementById('screen-main').hidden = false;
+  if (location.hash) history_pushHash('');
+  window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+}
+
+// Avoid clobbering the global "history" object — wrap pushState
+function history_pushHash(hash) {
+  const url = location.pathname + location.search + (hash || '');
+  window.history.pushState({}, '', url);
+}
+
+window.addEventListener('popstate', () => {
+  const m = location.hash.match(/^#t(\d+)$/);
+  if (m) {
+    const idx = parseInt(m[1], 10);
+    if (travellers[idx]) { openDetail(idx); return; }
+  }
+  closeDetail();
+});
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+renderList();
+hydrateLiveFortunes();
+// Deep-link support: #t3 → opens traveller index 3
+const m = location.hash.match(/^#t(\d+)$/);
+if (m) {
+  const idx = parseInt(m[1], 10);
+  if (travellers[idx] && epochOf(travellers[idx]) > 1) openDetail(idx);
+}
+
+// Expose for live edits in console
+window.travellers = travellers;
+window.renderList = renderList;
+window.hydrateLiveFortunes = hydrateLiveFortunes;
+</script>
+
+</body>
+</html>
