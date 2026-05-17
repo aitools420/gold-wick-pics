@@ -25,8 +25,7 @@ const NINEMM_CA = "0x7b39712Ef45F7dcED2bBDF11F3D5046bA61dA719";  // 9MM on Pulse
 const sections = [
   { key: "crowned",       title: "Crowned Crumpets"     },
   { key: "pesantry",      title: "PulseChain Pesantry"  },
-  { key: "court_jesters", title: "Court Jesters"        },
-  { key: "test",          title: "Test Tourney"         }
+  { key: "court_jesters", title: "Court Jesters"        }
 ];
 
 const travellers = [
