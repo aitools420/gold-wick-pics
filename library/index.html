@@ -201,12 +201,19 @@ body::before {
 .archive tbody td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .archive tbody td.date { white-space: nowrap; color: var(--ink-dim); font-style: italic; }
 .archive tbody td.traveller { font-weight: 500; }
-.archive tbody td.traveller .coin {
-  color: var(--ink-dim);
-  font-size: 0.9em;
-  margin-left: 4px;
-  font-style: italic;
+.archive tbody td.coin {
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--gold-dark);
+  white-space: nowrap;
 }
+.archive tbody td.coin a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(74,44,8,0.4);
+}
+.archive tbody td.coin a:hover { filter: brightness(0.8); }
 .archive tbody td.traveller a {
   color: var(--ink);
   text-decoration: none;
@@ -268,6 +275,7 @@ footer a { color: var(--gold-mid); }
           <tr>
             <th data-key="date">Date<span class="arrow"></span></th>
             <th data-key="traveller">Traveller<span class="arrow"></span></th>
+            <th data-key="coin">Coin<span class="arrow"></span></th>
             <th class="num" data-key="forged">Mcap Added<span class="arrow"></span></th>
             <th class="num" data-key="faded">Mcap Exit<span class="arrow"></span></th>
             <th class="num" data-key="pnl">PnL<span class="arrow"></span></th>
@@ -319,6 +327,7 @@ function buildArchive() {
         travellerName: t.name,
         travellerLink: t.nameLink || null,
         coin: h.name || null,
+        coinLink: h.coinLink || null,
         forged: typeof h.forged === 'number' ? h.forged : null,
         faded:  typeof h.faded  === 'number' ? h.faded  : null,
         live: false
@@ -333,6 +342,7 @@ function buildArchive() {
       travellerName: t.name,
       travellerLink: t.nameLink || null,
       coin: (t.coin && t.coin !== '?') ? t.coin : null,
+      coinLink: t.coinLink || null,
       forged: typeof t.entryMcap === 'number' ? t.entryMcap : null,
       faded:  null,  // not yet exited
       live: true
@@ -361,6 +371,10 @@ function compareBy(key, dir) {
     else if (key === 'traveller') {
       va = (a.travellerName || '').toLowerCase();
       vb = (b.travellerName || '').toLowerCase();
+    }
+    else if (key === 'coin') {
+      va = (a.coin || '').toLowerCase();
+      vb = (b.coin || '').toLowerCase();
     }
     else if (key === 'forged') { va = a.forged; vb = b.forged; }
     else if (key === 'faded')  { va = a.faded;  vb = b.faded; }
@@ -404,7 +418,11 @@ function renderArchive() {
     const nameHtml = r.travellerLink
       ? `<a href="${escapeHtml(r.travellerLink)}" target="_blank" rel="noopener">${escapeHtml(r.travellerName)}</a>`
       : escapeHtml(r.travellerName);
-    const coinHtml = r.coin ? `<span class="coin">· ${escapeHtml(r.coin)}</span>` : '';
+    const coinCell = r.coin
+      ? (r.coinLink
+          ? `<a href="${escapeHtml(r.coinLink)}" target="_blank" rel="noopener">${escapeHtml(r.coin)}</a>`
+          : escapeHtml(r.coin))
+      : '—';
     const pct = pnlOf(r);
     let pnlCell = '—', pnlClass = '';
     if (pct != null) {
@@ -415,7 +433,8 @@ function renderArchive() {
     return `
       <tr>
         <td class="date">${dateCell}</td>
-        <td class="traveller">${nameHtml}${coinHtml}</td>
+        <td class="traveller">${nameHtml}</td>
+        <td class="coin">${coinCell}</td>
         <td class="num">${formatMcap(r.forged)}</td>
         <td class="num">${formatMcap(r.faded)}</td>
         <td class="num ${pnlClass}">${pnlCell}</td>

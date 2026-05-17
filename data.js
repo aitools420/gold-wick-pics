@@ -52,6 +52,7 @@ const travellers = [
     coinLink: "https://dexscreener.com/pulsechain/" + WICK_CA,
     fortune: null,        // filled live from DexScreener
     fortuneLive: true,
+    entryMcap: 57032,     // snapshot 2026-05-18 — frozen
     history: []           // Epoch I — no past hoards
   },
   {
@@ -76,6 +77,7 @@ const travellers = [
     coinLink: FINK_CA ? "https://dexscreener.com/pulsechain/" + FINK_CA : null,
     fortune: null,
     fortuneLive: !!FINK_CA,
+    entryMcap: 5521,      // snapshot 2026-05-18 — frozen
     history: []
   },
   {
@@ -88,6 +90,7 @@ const travellers = [
     coinLink: "https://dexscreener.com/pulsechain/" + LORD_CA,
     fortune: null,
     fortuneLive: true,
+    entryMcap: 54694,     // snapshot 2026-05-18 — frozen
     history: []
   },
   {
@@ -100,6 +103,7 @@ const travellers = [
     coinLink: "https://dexscreener.com/pulsechain/" + PEACH_CA,
     fortune: null,
     fortuneLive: true,
+    entryMcap: 20211,     // snapshot 2026-05-18 — frozen
     history: []
   },
   {
@@ -156,6 +160,7 @@ const travellers = [
     coinLink: "https://dexscreener.com/pulsechain/" + FSJAL_CA,
     fortune: null,
     fortuneLive: true,
+    entryMcap: 11284,     // snapshot 2026-05-18 — frozen
     history: []
   },
   {
@@ -179,6 +184,7 @@ const travellers = [
     coinLink: "https://dexscreener.com/pulsechain/" + RAICHU_CA,
     fortune: null,
     fortuneLive: true,
+    entryMcap: 71338,     // snapshot 2026-05-18 — frozen
     history: []
   },
   {
@@ -191,6 +197,7 @@ const travellers = [
     coinLink: "https://dexscreener.com/pulsechain/" + HEX_CA,
     fortune: null,
     fortuneLive: true,
+    entryMcap: 63603308,  // snapshot 2026-05-18 — frozen
     history: []
   },
   {
@@ -203,6 +210,7 @@ const travellers = [
     coinLink: "https://dexscreener.com/pulsechain/" + PEWPEW_CA,
     fortune: null,
     fortuneLive: true,
+    entryMcap: 40342,     // snapshot 2026-05-18 — frozen
     history: []
   },
   {
@@ -215,6 +223,7 @@ const travellers = [
     coinLink: "https://dexscreener.com/pulsechain/" + NINEMM_CA,
     fortune: null,
     fortuneLive: true,
+    entryMcap: 1068119,   // snapshot 2026-05-18 — frozen
     history: []
   },
   {
@@ -227,6 +236,7 @@ const travellers = [
     coinLink: "https://dexscreener.com/pulsechain/" + TROLL_CA,
     fortune: null,
     fortuneLive: true,
+    entryMcap: 3164,      // snapshot 2026-05-18 — frozen
     history: []
   },
   {
@@ -239,6 +249,7 @@ const travellers = [
     coinLink: "https://dexscreener.com/pulsechain/" + WARTIME_CA,
     fortune: null,
     fortuneLive: true,
+    entryMcap: 149101,    // snapshot 2026-05-18 — frozen
     history: []
   },
 
