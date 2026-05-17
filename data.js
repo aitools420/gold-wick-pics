@@ -18,6 +18,7 @@ const FSJAL_CA  = "0xae8b25B28D3eF3ADe67aD40Fd96af45faad3a271";  // Fsjal on Pul
 const WARTIME_CA= "0x85bff9e86865B3ea8B9f59eb60e20eC5c6d21cee";  // WARTIME on PulseChain (Pesant Pete)
 const PEWPEW_CA = "0x9deeaF046e144Fb6304A5ACD2aF142bBfE958030";  // PEWPEW on PulseChain (Executioner)
 const TROLL_CA  = "0xa25a57c08553980f8E162131C547F66d9F566664";  // TROLL (Trollface) on PulseChain (TopCap)
+const NINEMM_CA = "0x7b39712Ef45F7dcED2bBDF11F3D5046bA61dA719";  // 9MM on PulseChain (KASH)
 
 // Section list (rendered top-to-bottom). Each traveller declares which
 // section it belongs to via its `section` key.
@@ -200,6 +201,18 @@ const travellers = [
     inscribed: "Day XVIII, May 2026",
     coin: "PEWPEW",
     coinLink: "https://dexscreener.com/pulsechain/" + PEWPEW_CA,
+    fortune: null,
+    fortuneLive: true,
+    history: []
+  },
+  {
+    section: "pesantry",
+    name: "KASH",
+    nameLink: "https://x.com/kashusking420",
+    avatar: "💵",         // banknote fallback if unavatar 404s
+    inscribed: "Day XVIII, May 2026",
+    coin: "9MM",
+    coinLink: "https://dexscreener.com/pulsechain/" + NINEMM_CA,
     fortune: null,
     fortuneLive: true,
     history: []
