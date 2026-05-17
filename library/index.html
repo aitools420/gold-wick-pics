@@ -169,8 +169,24 @@ body::before {
   text-align: left;
   padding: 6px 8px 8px;
   border-bottom: 1px solid rgba(74,44,8,0.45);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
 }
+.archive thead th:hover { color: #2a1a08; }
 .archive thead th.num { text-align: right; }
+.archive thead th .arrow {
+  display: inline-block;
+  width: 0.7em;
+  margin-left: 4px;
+  opacity: 0.35;
+  font-size: 0.85em;
+}
+.archive thead th.sort-asc  .arrow::before { content: '▲'; opacity: 1; }
+.archive thead th.sort-desc .arrow::before { content: '▼'; opacity: 1; }
+.archive thead th.sort-asc .arrow,
+.archive thead th.sort-desc .arrow { opacity: 1; color: var(--gold-dark); }
+.archive thead th .arrow::before { content: '↕'; }
 
 .archive tbody tr {
   border-bottom: 1px dashed rgba(74,44,8,0.22);
@@ -250,16 +266,16 @@ footer a { color: var(--gold-mid); }
       <table class="archive" id="archive">
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Traveller</th>
-            <th class="num">Mcap Added</th>
-            <th class="num">Mcap Exit</th>
-            <th class="num">PnL</th>
+            <th data-key="date">Date<span class="arrow"></span></th>
+            <th data-key="traveller">Traveller<span class="arrow"></span></th>
+            <th class="num" data-key="forged">Mcap Added<span class="arrow"></span></th>
+            <th class="num" data-key="faded">Mcap Exit<span class="arrow"></span></th>
+            <th class="num" data-key="pnl">PnL<span class="arrow"></span></th>
           </tr>
         </thead>
         <tbody id="archive-body"></tbody>
       </table>
-      <div id="empty" class="empty" hidden>The library is empty — no past hoards have been inscribed yet.</div>
+      <div id="empty" class="empty" hidden>The library is empty — no entries to display.</div>
     </div>
   </div>
 </section>
@@ -285,51 +301,113 @@ function escapeHtml(s) {
   }[c]));
 }
 
-// Flatten every traveller's history[] into one chronological scroll.
-// Each row: { date, dateSortKey, travellerName, travellerLink, coin, forged, faded, pnlPct }
+// One row per closed past hoard (history[] entry) plus one row per live
+// position (each non-test traveller's current coin). Test-section travellers
+// are excluded — their fictional history would pollute the archive.
 function buildArchive() {
   const rows = [];
   for (const t of (Array.isArray(travellers) ? travellers : [])) {
+    if (t.section === 'test') continue;
+    // Closed past hoards from history[]
     const hist = Array.isArray(t.history) ? t.history : [];
     for (const h of hist) {
       const dateRaw = h.date || null;
       const parsed = dateRaw ? Date.parse(dateRaw) : NaN;
       rows.push({
         date: dateRaw,
-        dateSortKey: Number.isFinite(parsed) ? parsed : -Infinity, // undated -> sink to bottom
+        dateSortKey: Number.isFinite(parsed) ? parsed : null,
         travellerName: t.name,
         travellerLink: t.nameLink || null,
         coin: h.name || null,
         forged: typeof h.forged === 'number' ? h.forged : null,
-        faded:  typeof h.faded  === 'number' ? h.faded  : null
+        faded:  typeof h.faded  === 'number' ? h.faded  : null,
+        live: false
       });
     }
+    // Current live position (one row per traveller, even if no history)
+    const liveDate = t.inscribed || null;
+    const liveParsed = liveDate ? Date.parse(liveDate) : NaN;
+    rows.push({
+      date: liveDate,
+      dateSortKey: Number.isFinite(liveParsed) ? liveParsed : null,
+      travellerName: t.name,
+      travellerLink: t.nameLink || null,
+      coin: (t.coin && t.coin !== '?') ? t.coin : null,
+      forged: typeof t.entryMcap === 'number' ? t.entryMcap : null,
+      faded:  null,  // not yet exited
+      live: true
+    });
   }
-  // Newest first; undated last (preserved input order among undated).
-  rows.sort((a, b) => b.dateSortKey - a.dateSortKey);
   return rows;
+}
+
+/* ── Sorting ──────────────────────────────────────────────────────
+   Each column maps to a comparator. Missing values sink to the end
+   of both asc and desc so the meaningful rows always sit on top. */
+const sortState = { key: 'date', dir: 'desc' };
+
+function pnlOf(r) {
+  if (r.forged != null && r.faded != null && r.forged > 0) {
+    return ((r.faded - r.forged) / r.forged) * 100;
+  }
+  return null;
+}
+
+function compareBy(key, dir) {
+  const sign = dir === 'asc' ? 1 : -1;
+  return (a, b) => {
+    let va, vb;
+    if (key === 'date')      { va = a.dateSortKey; vb = b.dateSortKey; }
+    else if (key === 'traveller') {
+      va = (a.travellerName || '').toLowerCase();
+      vb = (b.travellerName || '').toLowerCase();
+    }
+    else if (key === 'forged') { va = a.forged; vb = b.forged; }
+    else if (key === 'faded')  { va = a.faded;  vb = b.faded; }
+    else if (key === 'pnl')    { va = pnlOf(a); vb = pnlOf(b); }
+    // Nulls always sink to bottom regardless of dir.
+    const aNull = (va == null || (typeof va === 'number' && !isFinite(va)));
+    const bNull = (vb == null || (typeof vb === 'number' && !isFinite(vb)));
+    if (aNull && bNull) return 0;
+    if (aNull) return 1;
+    if (bNull) return -1;
+    if (typeof va === 'string') return va.localeCompare(vb) * sign;
+    return (va - vb) * sign;
+  };
 }
 
 function renderArchive() {
   const rows = buildArchive();
   const body = document.getElementById('archive-body');
   const empty = document.getElementById('empty');
+  const table = document.getElementById('archive');
   if (rows.length === 0) {
     body.innerHTML = '';
     empty.hidden = false;
-    document.getElementById('archive').hidden = true;
+    table.hidden = true;
     return;
   }
   empty.hidden = true;
+  table.hidden = false;
+  rows.sort(compareBy(sortState.key, sortState.dir));
+
+  // Refresh header arrow indicators.
+  table.querySelectorAll('thead th').forEach(th => {
+    th.classList.remove('sort-asc', 'sort-desc');
+    if (th.dataset.key === sortState.key) {
+      th.classList.add(sortState.dir === 'asc' ? 'sort-asc' : 'sort-desc');
+    }
+  });
+
   body.innerHTML = rows.map(r => {
     const dateCell = r.date ? escapeHtml(r.date) : '—';
     const nameHtml = r.travellerLink
       ? `<a href="${escapeHtml(r.travellerLink)}" target="_blank" rel="noopener">${escapeHtml(r.travellerName)}</a>`
       : escapeHtml(r.travellerName);
     const coinHtml = r.coin ? `<span class="coin">· ${escapeHtml(r.coin)}</span>` : '';
+    const pct = pnlOf(r);
     let pnlCell = '—', pnlClass = '';
-    if (r.forged != null && r.faded != null && r.forged > 0) {
-      const pct = ((r.faded - r.forged) / r.forged) * 100;
+    if (pct != null) {
       const gain = pct >= 0;
       pnlClass = gain ? 'pnl gain' : 'pnl loss';
       pnlCell = (gain ? '+' : '') + pct.toFixed(1) + '%';
@@ -345,6 +423,21 @@ function renderArchive() {
     `;
   }).join('');
 }
+
+// Wire column-header clicks → toggle asc/desc on that key.
+document.querySelectorAll('#archive thead th').forEach(th => {
+  th.addEventListener('click', () => {
+    const key = th.dataset.key;
+    if (!key) return;
+    if (sortState.key === key) {
+      sortState.dir = sortState.dir === 'asc' ? 'desc' : 'asc';
+    } else {
+      sortState.key = key;
+      sortState.dir = (key === 'date' || key === 'forged' || key === 'faded' || key === 'pnl') ? 'desc' : 'asc';
+    }
+    renderArchive();
+  });
+});
 
 renderArchive();
 </script>
