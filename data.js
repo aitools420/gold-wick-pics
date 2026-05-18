@@ -12,7 +12,7 @@ const HEX_CA    = "0x2b591e99afe9F32eAA6214f7B7629768c40Eeb39";
 const RAICHU_CA = "0xa6cFfE8Bc798628573a3e91Ed84EfD92D6D8e8B0";
 const DPEPE_CA  = "0xE9e15d6F7380D1718a3bdeeE720eE979fAC1F5BC";
 const FINK_CA   = "0x578f94F729D41983b77a07650517479e409c329B";  // BaalRock's PulseChain token
-const LORD_CA   = "0xBb815Fc95Cc696299906B19F6f65bACf921B4a0E";  // WARLORD on PulseChain
+const LORD_CA   = "0xCC30A51480393A7fc537A6616291984d7e9Ea183";  // LORD (Landlord) on PulseChain — Cruisey's pick
 const PEACH_CA  = "0x3cC6704b0902475587363DEfbD6dAb2ec0581628";  // Freedom of Peach on PulseChain
 const FSJAL_CA  = "0xae8b25B28D3eF3ADe67aD40Fd96af45faad3a271";  // Fsjal on PulseChain
 const WARTIME_CA= "0x85bff9e86865B3ea8B9f59eb60e20eC5c6d21cee";  // WARTIME on PulseChain (Pesant Pete)
@@ -89,7 +89,7 @@ const travellers = [
     coinLink: "https://dexscreener.com/pulsechain/" + LORD_CA,
     fortune: null,
     fortuneLive: true,
-    entryMcap: 54694,     // snapshot 2026-05-18 — frozen
+    entryMcap: 3161,      // snapshot 2026-05-18 — frozen
     history: []
   },
   {
