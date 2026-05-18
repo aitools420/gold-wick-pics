@@ -76,6 +76,24 @@ body::before {
 }
 
 .screen { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; }
+
+/* Top CTA link — gold gradient button, matches library's return-link */
+.top-link {
+  display: inline-block;
+  margin: 0 0 14px 4px;
+  padding: 6px 14px 7px;
+  background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold-mid) 100%);
+  border: 1px solid var(--gold-dark);
+  border-radius: 4px;
+  color: var(--gold-dark);
+  text-decoration: none;
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+.top-link:hover { filter: brightness(1.08); }
 .screen[hidden] { display: none; }
 
 /* ============================================================
@@ -914,6 +932,9 @@ footer .disclaimer {
      SCREEN 1 · The Golden Coin List
      ============================================================ -->
 <section id="screen-main" class="screen">
+  <a class="top-link" href="https://pfp.wick.pics/gold">forge a golden pfp →</a>
+  <a class="top-link" href="/library/">dark library →</a>
+
   <header class="banner">
     <h1>Golden Coins</h1>
     <div class="subtitle">A ledger of bold travellers and the fortunes they seek</div>
@@ -944,7 +965,7 @@ footer .disclaimer {
 </section>
 
 <footer>
-  <div>Inscribed by the keeper of <a href="https://meta.wick.pics/">wick pics</a> · <a href="/library/">library of past hoards</a> · <a href="https://pfp.wick.pics/gold">forge a golden pfp</a></div>
+  <div>Inscribed by the keeper of <a href="https://meta.wick.pics/">wick pics</a></div>
   <div class="disclaimer">these tokens are not endorsed by these users beyond just being their current favorite coins. <br> these users are not necessarily the devs of these tokens. coins can go up or down. <br> none of this is financial advice</div>
 </footer>
 
