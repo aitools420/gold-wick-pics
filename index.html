@@ -77,10 +77,16 @@ body::before {
 
 .screen { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; }
 
-/* Top CTA link — gold gradient button, matches library's return-link */
+/* Top CTA links — gold gradient buttons, centered above the banner */
+.top-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 0 14px;
+}
 .top-link {
   display: inline-block;
-  margin: 0 0 14px 4px;
   padding: 6px 14px 7px;
   background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold-mid) 100%);
   border: 1px solid var(--gold-dark);
@@ -932,8 +938,10 @@ footer .disclaimer {
      SCREEN 1 · The Golden Coin List
      ============================================================ -->
 <section id="screen-main" class="screen">
-  <a class="top-link" href="https://pfp.wick.pics/gold">forge a golden pfp →</a>
-  <a class="top-link" href="/library/">dark library →</a>
+  <div class="top-links">
+    <a class="top-link" href="https://pfp.wick.pics/gold">forge a golden pfp</a>
+    <a class="top-link" href="/library/">dark library</a>
+  </div>
 
   <header class="banner">
     <h1>Golden Coins</h1>

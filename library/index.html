@@ -108,9 +108,15 @@ body::before {
 }
 
 /* ── return link ────────────────────────────────────────────── */
+.top-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 0 16px;
+}
 .return-link {
   display: inline-block;
-  margin: 0 0 16px 4px;
   padding: 6px 14px 7px;
   background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold-mid) 100%);
   border: 1px solid var(--gold-dark);
@@ -261,8 +267,10 @@ footer a { color: var(--gold-mid); }
 <body>
 
 <section class="screen">
-  <a class="return-link" href="../">◄ Return to Golden Coins</a>
-  <a class="return-link" href="https://pfp.wick.pics/gold">forge a golden pfp →</a>
+  <div class="top-links">
+    <a class="return-link" href="../">Return to Golden Coins</a>
+    <a class="return-link" href="https://pfp.wick.pics/gold">forge a golden pfp</a>
+  </div>
 
   <header class="banner">
     <h1>DARK LIBRARY</h1>
