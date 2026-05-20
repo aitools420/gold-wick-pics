@@ -60,7 +60,7 @@ const travellers = [
     coinLink: "https://dexscreener.com/pulsechain/" + WICK_CA,
     fortune: null,        // filled live from DexScreener
     fortuneLive: true,
-    entryMcap: 57032,     // snapshot 2026-05-18 — frozen
+    entryMcap: 55000,     // 2026-05-20 — per Chef, dark library "MCap added" = 55K
     history: []           // Epoch I — no past hoards
   },
   {
