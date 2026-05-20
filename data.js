@@ -24,6 +24,7 @@ const ZKP_CA    = "0x90F055196778e541018482213Ca50648cEA1a050";  // ZKP (Zero Kn
 const WARLORD_CA= "0xBb815Fc95Cc696299906B19F6f65bACf921B4a0E";  // LORD (Warlord) on PulseChain (Senvar Diamondblade) — distinct from Cruisey's Landlord LORD
 const NOTHING_CA= "0xF33C0bB40d1BBf6EAfaAea2ADFb7d2D3EbC1E49C";  // The "Nothing" token (blank-symbol meme) on PulseChain (PRINCE)
 const PSSH_CA   = "0xB5C4ecEF450fd36d0eBa1420F6A19DBfBeE5292e";  // pSSH (SuperStake: pHEX) on PulseChain (Frosty tha Snowman)
+const BITCOIN_CA= "0x71c9eb4be0253156d6755e53cceb2b08778c9c8f";  // BITCOIN (Ticker $Bitcoin, new 2026-05-12) on PulseChain (Bitcoinus Obamus)
 
 // Section list (rendered top-to-bottom). Each traveller declares which
 // section it belongs to via its `section` key.
@@ -320,6 +321,19 @@ const travellers = [
     fortune: null,
     fortuneLive: true,
     entryMcap: 121262,    // snapshot 2026-05-20 — frozen (primary pair)
+    history: []
+  },
+  {
+    section: "pesantry",
+    name: "Bitcoinus Obamus",
+    nameLink: "https://x.com/obama__nastty",
+    avatar: "🪙",         // coin fallback (orange-stack vibe for BITCOIN)
+    inscribed: "Day XX, May MMXXVI",
+    coin: "BITCOIN",
+    coinLink: "https://dexscreener.com/pulsechain/" + BITCOIN_CA,
+    fortune: null,
+    fortuneLive: true,
+    entryMcap: 566,       // snapshot 2026-05-20 — frozen (new BITCOIN ticker, primary pair)
     history: []
   },
 ];
