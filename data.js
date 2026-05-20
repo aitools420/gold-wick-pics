@@ -140,9 +140,10 @@ const travellers = [
     nameLink: "https://x.com/Bub_Da_LARP",
     avatar: "🎭",         // theatre mask fallback if unavatar 404s
     inscribed: "Day XVIII, May MMXXVI",
-    coin: "?",
+    coin: "FSJAL",
+    coinLink: "https://dexscreener.com/pulsechain/" + FSJAL_CA,
     fortune: null,
-    fortuneLive: false,
+    fortuneLive: true,
     history: []
   },
   {
