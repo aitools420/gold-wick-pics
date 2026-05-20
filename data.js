@@ -19,6 +19,7 @@ const WARTIME_CA= "0x85bff9e86865B3ea8B9f59eb60e20eC5c6d21cee";  // WARTIME on P
 const PEWPEW_CA = "0x9deeaF046e144Fb6304A5ACD2aF142bBfE958030";  // PEWPEW on PulseChain (Executioner)
 const TROLL_CA  = "0xa25a57c08553980f8E162131C547F66d9F566664";  // TROLL (Trollface) on PulseChain (TopCap)
 const NINEMM_CA = "0x7b39712Ef45F7dcED2bBDF11F3D5046bA61dA719";  // 9MM on PulseChain (KASH)
+const VIBES_CA  = "0x50D0DD7f2164212B6218EDe3834E39d629bd72dc";  // VIBES on PulseChain (Stephanos Maximus)
 
 // Section list (rendered top-to-bottom). Each traveller declares which
 // section it belongs to via its `section` key.
@@ -250,6 +251,19 @@ const travellers = [
     fortuneLive: false,   // mcap intentionally labelled, no DS fetch
     entryMcap: 149101,    // snapshot 2026-05-18 — frozen (library only)
     epoch: 5,             // explicit override (V)
+    history: []
+  },
+  {
+    section: "court_jesters",
+    name: "Stephanos Maximus",
+    nameLink: "https://x.com/ogstefan_",
+    avatar: "🏛️",         // classical pillar fallback (Greek Stephanos = "crown")
+    inscribed: "Day XX, May MMXXVI",
+    coin: "VIBES",
+    coinLink: "https://dexscreener.com/pulsechain/" + VIBES_CA,
+    fortune: null,
+    fortuneLive: true,
+    entryMcap: 3870,      // snapshot 2026-05-20 — frozen
     history: []
   },
 ];

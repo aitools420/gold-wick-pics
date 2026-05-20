@@ -580,6 +580,15 @@ a.coin:active { transform: scale(0.97); }
   line-height: 1.1;
   white-space: nowrap;
 }
+/* 2026-05-20: string fortunes like "irrelevant" rendered smaller — the
+   default clamp(14, 4vw, 18px) was too prominent for a flavour label.
+   Drops to ~10-13px range; still legible, no longer competing with mcap. */
+.fortune.fortune-text {
+  font-size: clamp(10px, 2.6vw, 13px);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.entry.stacked .fortune.fortune-text { font-size: clamp(13px, 3.4vw, 17px); }
 .fortune.loading {
   background: none;
   -webkit-text-fill-color: rgba(240,210,150,0.75);
@@ -1066,8 +1075,10 @@ function entryParts(t, i) {
   let fortuneInner;
   if (t.fortune != null) {
     // String fortunes (e.g. "irrelevant") render verbatim; numbers format as mcap.
-    const display = typeof t.fortune === 'string' ? escapeHtml(t.fortune) : formatMcap(t.fortune);
-    fortuneInner = `<span class="fortune" data-fortune-cell="${i}">${display}</span>`;
+    const isStringFortune = typeof t.fortune === 'string';
+    const display = isStringFortune ? escapeHtml(t.fortune) : formatMcap(t.fortune);
+    const extraCls = isStringFortune ? ' fortune-text' : '';
+    fortuneInner = `<span class="fortune${extraCls}" data-fortune-cell="${i}">${display}</span>`;
   } else if (t.fortuneLive) {
     fortuneInner = `<span class="fortune loading" data-fortune-cell="${i}">…</span>`;
   } else {
