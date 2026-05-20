@@ -342,7 +342,7 @@ const travellers = [
   },
   {
     section: "pesantry",
-    name: "KR tha Great",
+    name: "K.R. tha Great",
     nameLink: "https://x.com/KR4ATH",
     avatar: "👑",         // crown fallback (KR tha Great)
     inscribed: "Day XX, May MMXXVI",
