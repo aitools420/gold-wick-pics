@@ -254,7 +254,7 @@ const travellers = [
     history: []
   },
   {
-    section: "court_jesters",
+    section: "crowned",
     name: "Stephanos Maximus",
     nameLink: "https://x.com/ogstefan_",
     avatar: "🏛️",         // classical pillar fallback (Greek Stephanos = "crown")
