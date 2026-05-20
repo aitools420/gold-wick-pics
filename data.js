@@ -301,7 +301,7 @@ const travellers = [
     nameLink: "https://x.com/PrinceLFG",
     avatar: "🤴",         // prince fallback
     inscribed: "Day XX, May MMXXVI",
-    coin: "Nothing",      // joke ticker — the on-chain token has a blank-whitespace symbol/name
+    coin: "",             // intentionally blank per Chef — the on-chain token literally has a whitespace symbol; this site honours the joke and renders nothing
     coinLink: "https://dexscreener.com/pulsechain/" + NOTHING_CA,
     fortune: null,
     fortuneLive: true,
