@@ -19,7 +19,8 @@ const WARTIME_CA= "0x85bff9e86865B3ea8B9f59eb60e20eC5c6d21cee";  // WARTIME on P
 const PEWPEW_CA = "0x9deeaF046e144Fb6304A5ACD2aF142bBfE958030";  // PEWPEW on PulseChain (Executioner)
 const TROLL_CA  = "0xa25a57c08553980f8E162131C547F66d9F566664";  // TROLL (Trollface) on PulseChain (TopCap)
 const NINEMM_CA = "0x7b39712Ef45F7dcED2bBDF11F3D5046bA61dA719";  // 9MM on PulseChain (KASH)
-const VIBES_CA  = "0x995890eD6E550FBA31ec220D70929872fbd1e0F7";  // Vibes on PulseChain (Stephanos Maximus) — mixed-case "Vibes", not the all-caps duplicate at 0x50D0DD…
+const VIBES_CA  = "0x995890eD6E550FBA31ec220D70929872fbd1e0F7";  // Vibes on PulseChain — mixed-case "Vibes", not the all-caps duplicate at 0x50D0DD… (unused since Stephanos moved to PLSX)
+const PLSX_CA   = "0x95B303987A60C71504D99Aa1b13B4DA07b0790ab";  // PulseX on PulseChain (Stephanos Maximus)
 const ZKP_CA    = "0x90F055196778e541018482213Ca50648cEA1a050";  // ZKP (Zero Knowledge Printer) on PulseChain (MVS)
 const WARLORD_CA= "0xBb815Fc95Cc696299906B19F6f65bACf921B4a0E";  // LORD (Warlord) on PulseChain (Senvar Diamondblade) — distinct from Cruisey's Landlord LORD
 const NOTHING_CA= "0xF33C0bB40d1BBf6EAfaAea2ADFb7d2D3EbC1E49C";  // The "Nothing" token (blank-symbol meme) on PulseChain (PRINCE)
@@ -264,11 +265,11 @@ const travellers = [
     nameLink: "https://x.com/ogstefan_",
     avatar: "🏛️",         // classical pillar fallback (Greek Stephanos = "crown")
     inscribed: "Day XX, May MMXXVI",
-    coin: "VIBES",
-    coinLink: "https://dexscreener.com/pulsechain/" + VIBES_CA,
+    coin: "PLSX",
+    coinLink: "https://dexscreener.com/pulsechain/" + PLSX_CA,
     fortune: null,
     fortuneLive: true,
-    entryMcap: 8486,      // snapshot 2026-05-20 — frozen (mixed-case Vibes)
+    entryMcap: 782559166, // snapshot 2026-05-20 — frozen (PulseX)
     history: []
   },
   {
