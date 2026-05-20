@@ -20,6 +20,7 @@ const PEWPEW_CA = "0x9deeaF046e144Fb6304A5ACD2aF142bBfE958030";  // PEWPEW on Pu
 const TROLL_CA  = "0xa25a57c08553980f8E162131C547F66d9F566664";  // TROLL (Trollface) on PulseChain (TopCap)
 const NINEMM_CA = "0x7b39712Ef45F7dcED2bBDF11F3D5046bA61dA719";  // 9MM on PulseChain (KASH)
 const VIBES_CA  = "0x50D0DD7f2164212B6218EDe3834E39d629bd72dc";  // VIBES on PulseChain (Stephanos Maximus)
+const ZKP_CA    = "0x90F055196778e541018482213Ca50648cEA1a050";  // ZKP (Zero Knowledge Printer) on PulseChain (MVS)
 
 // Section list (rendered top-to-bottom). Each traveller declares which
 // section it belongs to via its `section` key.
@@ -264,6 +265,19 @@ const travellers = [
     fortune: null,
     fortuneLive: true,
     entryMcap: 3870,      // snapshot 2026-05-20 — frozen
+    history: []
+  },
+  {
+    section: "pesantry",
+    name: "MVS",
+    nameLink: "https://x.com/CrypMvs",
+    avatar: "🖨️",         // printer fallback (ZKP = Zero Knowledge Printer)
+    inscribed: "Day XX, May MMXXVI",
+    coin: "ZKP",
+    coinLink: "https://dexscreener.com/pulsechain/" + ZKP_CA,
+    fortune: null,
+    fortuneLive: true,
+    entryMcap: 378310,    // snapshot 2026-05-20 — frozen
     history: []
   },
 ];
