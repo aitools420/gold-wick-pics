@@ -421,4 +421,17 @@ const travellers = [
     fortuneLive: false,
     history: []
   },
+  {
+    section: "pesantry",
+    name: "The Town Pessimist",
+    nameLink: "https://x.com/paperboydkz",
+    avatar: "🌧️",        // rain cloud fallback — pessimist forecast
+    inscribed: "Day XXI, May MMXXVI",
+    coin: "HEX",
+    coinLink: "https://dexscreener.com/pulsechain/" + HEX_CA,
+    fortune: null,
+    fortuneLive: true,
+    entryMcap: 70798126,  // snapshot 2026-05-21 — frozen (HEX/MULE top pair on PulseChain)
+    history: []
+  },
 ];
