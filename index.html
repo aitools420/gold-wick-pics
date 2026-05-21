@@ -1224,12 +1224,21 @@ function setCachedMcap(ca, value) {
   writeMcapCache(cache);
 }
 
-async function fetchTokenMcap(ca) {
+async function fetchTokenMcap(ca, chainId) {
+  // 2026-05-21: chain-aware. `chainId` is parsed from the traveller's coinLink
+  // (e.g. "https://dexscreener.com/ethereum/0x..." → chainId="ethereum"). Default
+  // remains pulsechain when no hint is provided so legacy callers keep working.
+  const chain = (chainId || 'pulsechain').toLowerCase();
   try {
     const r = await fetch('https://api.dexscreener.com/latest/dex/tokens/' + ca, { cache: 'no-store' });
     if (!r.ok) return null;
     const d = await r.json();
-    const pairs = (d.pairs || []).filter(p => p && (p.chainId === 'pulsechain' || p.chainId === 'pulse'));
+    const pairs = (d.pairs || []).filter(p => {
+      if (!p) return false;
+      const c = (p.chainId || '').toLowerCase();
+      if (chain === 'pulsechain') return c === 'pulsechain' || c === 'pulse';
+      return c === chain;
+    });
     if (!pairs.length) return null;
     pairs.sort((a, b) => (b.liquidity?.usd || 0) - (a.liquidity?.usd || 0));
     const top = pairs[0];
@@ -1253,12 +1262,17 @@ function paintFortune(i, value) {
 }
 
 async function hydrateLiveFortunes() {
-  const needFetch = [];  // { i, ca } pairs whose cache is stale/missing
+  const needFetch = [];  // { i, ca, chainId } records whose cache is stale/missing
   for (let i = 0; i < travellers.length; i++) {
     const t = travellers[i];
     if (!t.fortuneLive) continue;
-    const ca = (t.coinLink || '').split('/').pop();
+    const url = t.coinLink || '';
+    const ca = url.split('/').pop();
     if (!ca || !ca.startsWith('0x')) continue;
+    // 2026-05-21: parse chain hint out of the coinLink ("dexscreener.com/<chain>/<ca>").
+    // Defaults to pulsechain when the URL doesn't contain a chain segment.
+    const chainMatch = url.match(/dexscreener\.com\/([^\/?#]+)/i);
+    const chainId = chainMatch ? chainMatch[1].toLowerCase() : 'pulsechain';
 
     // Cache hit (≤ 1h old) — paint immediately, skip the network call.
     const cached = cachedMcap(ca);
@@ -1266,12 +1280,12 @@ async function hydrateLiveFortunes() {
       paintFortune(i, cached);
       continue;
     }
-    needFetch.push({ i, ca });
+    needFetch.push({ i, ca, chainId });
   }
 
   // Cache misses run in parallel so the slowest fetch is the wall clock.
-  await Promise.all(needFetch.map(async ({ i, ca }) => {
-    const mc = await fetchTokenMcap(ca);
+  await Promise.all(needFetch.map(async ({ i, ca, chainId }) => {
+    const mc = await fetchTokenMcap(ca, chainId);
     if (mc != null) setCachedMcap(ca, mc);
     paintFortune(i, mc);
   }));

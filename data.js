@@ -29,6 +29,8 @@ const NOTHING_CA= "0xF33C0bB40d1BBf6EAfaAea2ADFb7d2D3EbC1E49C";  // The "Nothing
 const PSSH_CA   = "0xB5C4ecEF450fd36d0eBa1420F6A19DBfBeE5292e";  // pSSH (SuperStake: pHEX) on PulseChain (Frosty tha Snowman)
 const BITCOIN_CA= "0x71c9eb4be0253156d6755e53cceb2b08778c9c8f";  // BITCOIN (Ticker $Bitcoin, new 2026-05-12) on PulseChain (Bitcoinus Obamus)
 const INDIKIN_CA= "0xC0372486fCab952aA2B7998876d6aa79d4Fc1938";  // INDIKIN on PulseChain (Lady Carrera) — top pair via WPLS at 0x2c9596…56dB
+const WETH_CA   = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";  // Wrapped ETH on Ethereum mainnet (Tha Famous) — top pair WETH/USDC at 0x88e6A0…5640
+const WLFI_CA   = "0x4de992E0C1f6e1d68E49b797Af370A6be111B87f";  // $WLFI on PulseChain (Potato Slinger) — top pair $WLFI/WPLS at 0xd09DeD…0654
 
 // Section list (rendered top-to-bottom). Each traveller declares which
 // section it belongs to via its `section` key.
@@ -70,9 +72,11 @@ const travellers = [
     nameLink: "https://x.com/ThaFamousOG",
     avatar: "👑",         // crown for the famous; fallback if unavatar 404s
     inscribed: "Day XVIII, May MMXXVI",
-    coin: "?",
+    coin: "WETH",
+    coinLink: "https://dexscreener.com/ethereum/" + WETH_CA,
     fortune: null,
-    fortuneLive: false,
+    fortuneLive: true,
+    entryMcap: 4787779826,  // snapshot 2026-05-21 — frozen (WETH/USDC top pair on Ethereum)
     history: []
   },
   {
@@ -391,6 +395,30 @@ const travellers = [
     fortune: null,
     fortuneLive: true,
     entryMcap: 2158819,   // snapshot 2026-05-21 — frozen (RHPEPE primary pair via DexScreener)
+    history: []
+  },
+  {
+    section: "pesantry",
+    name: "Potato Slinger",
+    nameLink: "https://x.com/WLFIonPulse",
+    avatar: "🥔",         // potato fallback — Potato Slinger
+    inscribed: "Day XXI, May MMXXVI",
+    coin: "$WLFI",
+    coinLink: "https://dexscreener.com/pulsechain/" + WLFI_CA,
+    fortune: null,
+    fortuneLive: true,
+    entryMcap: 25372,     // snapshot 2026-05-21 — frozen ($WLFI/WPLS top pair via DexScreener)
+    history: []
+  },
+  {
+    section: "pesantry",
+    name: "Grand Emperor",
+    nameLink: "https://x.com/EmperorHexico96",
+    avatar: "🎩",         // top-hat fallback — emperor without crown yet
+    inscribed: "Day XXI, May MMXXVI",
+    coin: "?",
+    fortune: null,
+    fortuneLive: false,
     history: []
   },
 ];
