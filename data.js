@@ -139,9 +139,11 @@ const travellers = [
     nameLink: "https://x.com/0xRomans",
     avatar: "🏛️",         // Roman temple fallback if unavatar 404s
     inscribed: "Day XVIII, May MMXXVI",
-    coin: "?",
+    coin: "WICK",
+    coinLink: "https://dexscreener.com/pulsechain/" + WICK_CA,
     fortune: null,
-    fortuneLive: false,
+    fortuneLive: true,
+    entryMcap: 72733,     // snapshot 2026-05-21 — frozen (WICK/WPLS top pair on PulseChain)
     history: []
   },
   {
