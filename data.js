@@ -366,4 +366,17 @@ const travellers = [
     entryMcap: 566,       // snapshot 2026-05-20 — frozen (new BITCOIN ticker, primary pair)
     history: []
   },
+  {
+    section: "pesantry",
+    name: "Barter Worker",
+    nameLink: "https://x.com/defihussle",
+    avatar: "🌾",         // sheaf of rice — peasantry / barter-worker vibe
+    inscribed: "Day XXI, May MMXXVI",
+    coin: "RHPEPE",
+    coinLink: "https://dexscreener.com/pulsechain/" + RHPEPE_CA,
+    fortune: null,
+    fortuneLive: true,
+    entryMcap: 2158819,   // snapshot 2026-05-21 — frozen (RHPEPE primary pair via DexScreener)
+    history: []
+  },
 ];
