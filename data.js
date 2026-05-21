@@ -31,6 +31,7 @@ const BITCOIN_CA= "0x71c9eb4be0253156d6755e53cceb2b08778c9c8f";  // BITCOIN (Tic
 const INDIKIN_CA= "0xC0372486fCab952aA2B7998876d6aa79d4Fc1938";  // INDIKIN on PulseChain (Lady Carrera) — top pair via WPLS at 0x2c9596…56dB
 const WETH_CA   = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";  // Wrapped ETH bridged to PulseChain (Tha Famous) — same address as Ethereum mainnet via the PulseChain bridge mapping. Top PulseChain pair WETH/WPLS at 0x7994d5…78FD
 const WLFI_CA   = "0x4de992E0C1f6e1d68E49b797Af370A6be111B87f";  // $WLFI on PulseChain (Potato Slinger) — top pair $WLFI/WPLS at 0xd09DeD…0654
+const WAR_CA    = "0x954b7a3D178e0d4253511314F5Baf29FC7442d62";  // WAR on PulseChain (Vlad the Destroyooor) — top pair WAR/WPLS at 0x324394…52A6
 
 // Section list (rendered top-to-bottom). Each traveller declares which
 // section it belongs to via its `section` key.
@@ -125,9 +126,11 @@ const travellers = [
     nameLink: "https://x.com/FeelsVlad",
     avatar: "🧛",         // vampire fallback if unavatar 404s
     inscribed: "Day XVIII, May MMXXVI",
-    coin: "?",
+    coin: "WAR",
+    coinLink: "https://dexscreener.com/pulsechain/" + WAR_CA,
     fortune: null,
-    fortuneLive: false,
+    fortuneLive: true,
+    entryMcap: 3107,      // snapshot 2026-05-21 — frozen (WAR/WPLS top pair on PulseChain)
     history: []
   },
   {
