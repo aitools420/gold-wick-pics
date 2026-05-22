@@ -32,6 +32,7 @@ const INDIKIN_CA= "0xC0372486fCab952aA2B7998876d6aa79d4Fc1938";  // INDIKIN on P
 const WETH_CA   = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";  // Wrapped ETH bridged to PulseChain (Tha Famous) — same address as Ethereum mainnet via the PulseChain bridge mapping. Top PulseChain pair WETH/WPLS at 0x7994d5…78FD
 const WLFI_CA   = "0x4de992E0C1f6e1d68E49b797Af370A6be111B87f";  // $WLFI on PulseChain (Potato Slinger) — top pair $WLFI/WPLS at 0xd09DeD…0654
 const WAR_CA    = "0x954b7a3D178e0d4253511314F5Baf29FC7442d62";  // WAR on PulseChain (Vlad the Destroyooor) — top pair WAR/WPLS at 0x324394…52A6
+const CHIMP_CA  = "0xDa20E278a36c763412C52b6ffb273CC02764B3cB";  // $CHIMP on PulseChain (Grand Emperor) — the NEW one launched 2026-05-21 (~14h old at add). NOT the older 0xCA8f56… CHIMP.
 const WBTC_CA   = "0xb17D901469B9208B17d916112988A3FeD19b5cA1";  // Wrapped BTC bridged onto PulseChain — "Wrapped BTC from Ethereum" per PulseChain explorer. Distinct from Ethereum-mainnet WBTC address (which has no PulseChain pairs).
 
 // Section list (rendered top-to-bottom). Each traveller declares which
@@ -420,11 +421,13 @@ const travellers = [
     section: "pesantry",
     name: "Grand Emperor",
     nameLink: "https://x.com/EmperorHexico96",
-    avatar: "🎩",         // top-hat fallback — emperor without crown yet
+    avatar: "🎩",         // top-hat fallback — emperor
     inscribed: "Day XXI, May MMXXVI",
-    coin: "?",
+    coin: "$CHIMP",
+    coinLink: "https://dexscreener.com/pulsechain/" + CHIMP_CA,
     fortune: null,
-    fortuneLive: false,
+    fortuneLive: true,
+    entryMcap: 13505,     // snapshot 2026-05-22 — frozen (new $CHIMP, ~14h old, $CHIMP/WPLS pair via DexScreener)
     history: []
   },
   {
