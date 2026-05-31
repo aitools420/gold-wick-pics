@@ -22,9 +22,14 @@
   --gold-mid:   #f0b937;
   --gold-deep:  #b07710;
   --gold-dark:  #4a2c08;
-  --wood-light: #6b3a17;
-  --wood-mid:   #4a2410;
-  --wood-dark:  #2a1610;
+  --wood-light: #4f2c12;
+  --wood-mid:   #321a0c;
+  --wood-dark:  #190d06;
+  --bronze-hi:    #e6cf95;
+  --bronze-light: #c9a86b;
+  --bronze-mid:   #8c6a32;
+  --bronze-deep:  #5a4220;
+  --bronze-dark:  #2a1d0e;
   --parchment-light: #f6e6b8;
   --parchment-mid:   #e9d49a;
   --parchment-dark:  #c8ab74;
@@ -48,17 +53,18 @@ body {
   font-family: 'IM Fell English', Georgia, serif;
   color: var(--ink);
   background:
-    radial-gradient(ellipse 80% 60% at 50% 0%,   rgba(255,200,100,0.10) 0%, transparent 70%),
-    radial-gradient(ellipse 60% 50% at 50% 100%, rgba(0,0,0,0.55)        0%, transparent 70%),
+    radial-gradient(ellipse 70% 50% at 50% 0%,   rgba(255,180,80,0.08) 0%, transparent 66%),
+    radial-gradient(ellipse 90% 80% at 50% 122%, rgba(0,0,0,0.78)      0%, transparent 72%),
+    radial-gradient(ellipse 130% 95% at 50% 50%, transparent 38%, rgba(0,0,0,0.5) 100%),
     repeating-linear-gradient(
       94deg,
-      #3a2110 0px,  #3a2110 78px,
-      #2c1808 79px, #2c1808 80px,
-      #45291a 81px, #45291a 83px,
-      #2c1808 84px, #2c1808 85px
+      #2a1810 0px,  #2a1810 78px,
+      #170b05 79px, #170b05 80px,
+      #341d10 81px, #341d10 83px,
+      #170b05 84px, #170b05 85px
     ),
-    linear-gradient(180deg, #4a2810 0%, #1f0e08 100%);
-  background-attachment: fixed, fixed, scroll, fixed;
+    linear-gradient(180deg, #2c1710 0%, #100803 100%);
+  background-attachment: fixed, fixed, fixed, scroll, fixed;
   min-height: 100vh;
   padding: 24px 12px 48px;
   -webkit-tap-highlight-color: transparent;
@@ -68,9 +74,28 @@ body {
 body::before {
   content: '';
   position: fixed;
-  top: -120px; left: 50%; transform: translateX(-50%);
-  width: 480px; height: 240px;
-  background: radial-gradient(ellipse at center, rgba(255,200,100,0.18) 0%, transparent 70%);
+  top: -140px; left: 50%; transform: translateX(-50%);
+  width: 420px; height: 250px;
+  background: radial-gradient(ellipse at center, rgba(255,170,70,0.16) 0%, rgba(255,140,40,0.05) 45%, transparent 72%);
+  pointer-events: none;
+  z-index: 0;
+  animation: candleFlicker 5.5s ease-in-out infinite;
+}
+@keyframes candleFlicker {
+  0%, 100% { opacity: 0.82; }
+  25% { opacity: 1; }
+  50% { opacity: 0.66; }
+  72% { opacity: 0.93; }
+}
+/* Faint all-seeing eye presiding over the lodge */
+body::after {
+  content: '';
+  position: fixed;
+  top: 50%; left: 50%;
+  width: min(72vw, 540px); height: min(72vw, 540px);
+  transform: translate(-50%, -52%);
+  background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20200%20210%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%23c9a86b%27%20stroke-width%3D%273%27%20stroke-linejoin%3D%27round%27%20stroke-linecap%3D%27round%27%3E%3Cpath%20d%3D%27M100%2044%20L62%2026%20M100%2044%20L138%2026%20M100%2044%20L100%208%20M100%2044%20L74%2014%20M100%2044%20L126%2014%27%2F%3E%3Cpath%20d%3D%27M100%2046%20L170%20176%20L30%20176%20Z%27%2F%3E%3Cpath%20d%3D%27M56%20128%20Q100%2096%20144%20128%20Q100%20160%2056%20128%20Z%27%2F%3E%3C%2Fg%3E%3Ccircle%20cx%3D%27100%27%20cy%3D%27128%27%20r%3D%2713%27%20fill%3D%27%23c9a86b%27%2F%3E%3C%2Fsvg%3E") center / contain no-repeat;
+  opacity: 0.05;
   pointer-events: none;
   z-index: 0;
 }
@@ -107,7 +132,7 @@ body::before {
    ============================================================ */
 .banner {
   position: relative;
-  margin: 8px 0 28px;
+  margin: 40px 0 28px;
   padding: 22px 28px 24px;
   text-align: center;
   background:
@@ -139,6 +164,14 @@ body::before {
 }
 .banner::before { left: 14px; }
 .banner::after  { right: 14px; }
+.banner .crown {
+  position: absolute;
+  top: -36px; left: 50%; transform: translateX(-50%);
+  width: 88px; height: 62px;
+  background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20120%2084%27%3E%3Cpath%20d%3D%27M12%2066%20L19%2028%20L42%2052%20L60%2016%20L78%2052%20L101%2028%20L108%2066%20Z%27%20fill%3D%27%23b8893f%27%20stroke%3D%27%235a4220%27%20stroke-width%3D%273%27%20stroke-linejoin%3D%27round%27%2F%3E%3Crect%20x%3D%2712%27%20y%3D%2764%27%20width%3D%2796%27%20height%3D%2712%27%20rx%3D%273%27%20fill%3D%27%23a8762f%27%20stroke%3D%27%235a4220%27%20stroke-width%3D%273%27%2F%3E%3Ccircle%20cx%3D%2719%27%20cy%3D%2726%27%20r%3D%275.5%27%20fill%3D%27%23e6cf95%27%20stroke%3D%27%235a4220%27%20stroke-width%3D%272%27%2F%3E%3Ccircle%20cx%3D%2760%27%20cy%3D%2713%27%20r%3D%276.5%27%20fill%3D%27%23e6cf95%27%20stroke%3D%27%235a4220%27%20stroke-width%3D%272%27%2F%3E%3Ccircle%20cx%3D%27101%27%20cy%3D%2726%27%20r%3D%275.5%27%20fill%3D%27%23e6cf95%27%20stroke%3D%27%235a4220%27%20stroke-width%3D%272%27%2F%3E%3Ccircle%20cx%3D%2760%27%20cy%3D%2770%27%20r%3D%274%27%20fill%3D%27%237f1d1d%27%2F%3E%3Ccircle%20cx%3D%2736%27%20cy%3D%2770%27%20r%3D%273.5%27%20fill%3D%27%237f1d1d%27%2F%3E%3Ccircle%20cx%3D%2784%27%20cy%3D%2770%27%20r%3D%273.5%27%20fill%3D%27%237f1d1d%27%2F%3E%3C%2Fsvg%3E") center / contain no-repeat;
+  filter: drop-shadow(0 3px 5px rgba(0,0,0,0.6));
+  z-index: 3;
+}
 
 .banner h1 {
   font-family: 'Cinzel Decorative', serif;
@@ -168,13 +201,22 @@ body::before {
    ============================================================ */
 .parchment {
   position: relative;
-  padding: 4px;
+  padding: 7px;
   border-radius: 6px;
-  background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold-mid) 50%, var(--gold-deep) 100%);
+  background:
+    radial-gradient(circle at 8px 8px, var(--bronze-hi) 0 2px, transparent 3px),
+    radial-gradient(circle at calc(100% - 8px) 8px, var(--bronze-hi) 0 2px, transparent 3px),
+    radial-gradient(circle at 8px calc(100% - 8px), var(--bronze-hi) 0 2px, transparent 3px),
+    radial-gradient(circle at calc(100% - 8px) calc(100% - 8px), var(--bronze-hi) 0 2px, transparent 3px),
+    linear-gradient(180deg, var(--bronze-light) 0%, var(--bronze-mid) 45%, var(--bronze-deep) 100%);
   box-shadow:
-    0 0 0 2px var(--gold-dark),
-    0 0 24px rgba(0,0,0,0.5),
-    0 12px 32px rgba(0,0,0,0.7);
+    inset 0 1px 0 rgba(255,240,190,0.4),
+    inset 0 -2px 3px rgba(0,0,0,0.5),
+    0 0 0 2px var(--bronze-dark),
+    0 0 0 4px var(--bronze-mid),
+    0 0 0 6px var(--bronze-dark),
+    0 0 28px rgba(0,0,0,0.6),
+    0 14px 36px rgba(0,0,0,0.78);
 }
 .parchment-inner {
   position: relative;
@@ -219,16 +261,16 @@ body::before {
   margin: 0 auto 14px;
   padding: 10px 26px 12px;
   text-align: center;
-  background: linear-gradient(180deg, #6b3a17 0%, #4a2410 55%, #3d1f0d 100%);
+  background: linear-gradient(180deg, #4a3018 0%, #2e1d0e 55%, #20140a 100%);
   border-radius: 6px;
   box-shadow:
-    inset 0 2px 4px rgba(255,200,100,0.20),
-    inset 0 -3px 6px rgba(0,0,0,0.6),
-    0 0 0 1.5px var(--gold-dark),
-    0 0 0 3px var(--gold-deep),
-    0 0 0 4.5px var(--gold-dark),
-    0 0 18px rgba(255,170,60,0.18),
-    0 6px 14px rgba(0,0,0,0.55);
+    inset 0 2px 4px rgba(255,200,120,0.16),
+    inset 0 -3px 6px rgba(0,0,0,0.65),
+    0 0 0 1.5px var(--bronze-dark),
+    0 0 0 3px var(--bronze-mid),
+    0 0 0 4.5px var(--bronze-dark),
+    0 0 18px rgba(255,160,50,0.14),
+    0 6px 14px rgba(0,0,0,0.6);
   position: relative;
 }
 .section-banner::before, .section-banner::after {
@@ -238,12 +280,12 @@ body::before {
   top: 50%; transform: translateY(-50%);
   width: 11px; height: 11px;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #fff5c2 0%, #ffd966 45%, #c89020 75%, #6b3a08 100%);
+  background: radial-gradient(circle at 30% 30%, #f0dca0 0%, #d3b06f 45%, #8c6a32 75%, #2a1d0e 100%);
   box-shadow:
-    inset 0 -1px 2px rgba(80,40,0,0.6),
-    inset 0 1px 1px rgba(255,250,200,0.7),
-    0 0 0 1px var(--gold-dark),
-    0 0 4px rgba(255,200,80,0.55);
+    inset 0 -1px 2px rgba(40,25,0,0.6),
+    inset 0 1px 1px rgba(255,245,210,0.6),
+    0 0 0 1px var(--bronze-dark),
+    0 0 4px rgba(220,180,90,0.5);
 }
 .section-banner::before { left: 8px; }
 .section-banner::after  { right: 8px; }
@@ -688,15 +730,15 @@ a.coin:active { transform: scale(0.97); }
   text-align: center;
   border-radius: 8px;
   background:
-    linear-gradient(180deg, #6b3a17 0%, #4a2410 55%, #3d1f0d 100%);
+    linear-gradient(180deg, #4a3018 0%, #2e1d0e 55%, #20140a 100%);
   box-shadow:
-    inset 0 2px 4px rgba(255,200,100,0.18),
-    inset 0 -3px 6px rgba(0,0,0,0.6),
-    0 0 0 1.5px var(--gold-dark),
-    0 0 0 3.5px var(--gold-deep),
-    0 0 0 5px var(--gold-dark),
-    0 0 22px rgba(255,170,60,0.18),
-    0 10px 24px rgba(0,0,0,0.7);
+    inset 0 2px 4px rgba(255,200,120,0.16),
+    inset 0 -3px 6px rgba(0,0,0,0.65),
+    0 0 0 1.5px var(--bronze-dark),
+    0 0 0 3.5px var(--bronze-mid),
+    0 0 0 5px var(--bronze-dark),
+    0 0 22px rgba(255,160,50,0.14),
+    0 10px 24px rgba(0,0,0,0.72);
 }
 .plaque::before, .plaque::after {
   /* iron-stud rivets */
@@ -953,6 +995,7 @@ footer .disclaimer {
   </div>
 
   <header class="banner">
+    <div class="crown" aria-hidden="true"></div>
     <h1>Golden Coins</h1>
     <div class="subtitle">A ledger of bold travellers and the fortunes they seek</div>
   </header>
@@ -986,7 +1029,7 @@ footer .disclaimer {
   <div class="disclaimer">these tokens are not endorsed by these users beyond just being their current favorite coins. <br> these users are not necessarily the devs of these tokens. coins can go up or down. <br> none of this is financial advice</div>
 </footer>
 
-<script src="data.js?v=20260522a"></script>
+<script src="data.js?v=20260601a"></script>
 <script>
 
 /* ============================================================
