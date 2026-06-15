@@ -344,7 +344,7 @@ const travellers = [
     entryMcap: 389966,    // Epoch II — WARTIME entry snapshot 2026-06-15
     history: [
       // Epoch I — exited the blank "Nothing" token when he switched to WARTIME (2026-06-15)
-      { name: "Nothing", forged: 20814, faded: 8956, date: "Day XV, June MMXXVI" }
+      { name: "", forged: 20814, faded: 8956, date: "Day XV, June MMXXVI" }
     ]
   },
   {
