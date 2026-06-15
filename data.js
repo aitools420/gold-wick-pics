@@ -34,6 +34,8 @@ const WLFI_CA   = "0x4de992E0C1f6e1d68E49b797Af370A6be111B87f";  // $WLFI on Pul
 const WAR_CA    = "0x954b7a3D178e0d4253511314F5Baf29FC7442d62";  // WAR on PulseChain (Vlad the Destroyooor) — top pair WAR/WPLS at 0x324394…52A6
 const CHIMP_CA  = "0xDa20E278a36c763412C52b6ffb273CC02764B3cB";  // $CHIMP on PulseChain (Grand Emperor) — the NEW one launched 2026-05-21 (~14h old at add). NOT the older 0xCA8f56… CHIMP.
 const WBTC_CA   = "0xb17D901469B9208B17d916112988A3FeD19b5cA1";  // Wrapped BTC bridged onto PulseChain — "Wrapped BTC from Ethereum" per PulseChain explorer. Distinct from Ethereum-mainnet WBTC address (which has no PulseChain pairs).
+const KJP_CA    = "0x3848D41D6f439Ca645e9193c7680629A86B739ED";  // KJP on PulseChain (John the BlackSmith)
+const BUYNOW_CA = "0x8B14B88d5d5904dCECf2fCC731316A949daC516a";  // BUYNOW on PulseChain (Executioner — Epoch II, after exiting PEWPEW)
 
 // Section list (rendered top-to-bottom). Each traveller declares which
 // section it belongs to via its `section` key.
@@ -240,12 +242,15 @@ const travellers = [
     nameLink: "https://x.com/0xExecute",
     avatar: "🪓",         // axe fallback if unavatar 404s
     inscribed: "Day XVIII, May MMXXVI",
-    coin: "PEWPEW",
-    coinLink: "https://dexscreener.com/pulsechain/" + PEWPEW_CA,
+    coin: "BUYNOW",
+    coinLink: "https://dexscreener.com/pulsechain/" + BUYNOW_CA,
     fortune: null,
     fortuneLive: true,
-    entryMcap: 40342,     // snapshot 2026-05-18 — frozen
-    history: []
+    entryMcap: 3297,      // Epoch II — BUYNOW entry snapshot 2026-06-15
+    history: [
+      // Epoch I — exited PEWPEW when he switched to BUYNOW (2026-06-15)
+      { name: "PEWPEW", forged: 40342, faded: 89472, date: "Day XV, June MMXXVI" }
+    ]
   },
   {
     section: "pesantry",
@@ -332,11 +337,27 @@ const travellers = [
     nameLink: "https://x.com/PrinceLFG",
     avatar: "🤴",         // prince fallback
     inscribed: "Day XX, May MMXXVI",
-    coin: "",             // intentionally blank per Chef — the on-chain token literally has a whitespace symbol; this site honours the joke and renders nothing
-    coinLink: "https://dexscreener.com/pulsechain/" + NOTHING_CA,
+    coin: "WARTIME",
+    coinLink: "https://dexscreener.com/pulsechain/" + WARTIME_CA,
     fortune: null,
     fortuneLive: true,
-    entryMcap: 20814,     // snapshot 2026-05-20 — frozen (primary pair)
+    entryMcap: 389966,    // Epoch II — WARTIME entry snapshot 2026-06-15
+    history: [
+      // Epoch I — exited the blank "Nothing" token when he switched to WARTIME (2026-06-15)
+      { name: "Nothing", forged: 20814, faded: 8956, date: "Day XV, June MMXXVI" }
+    ]
+  },
+  {
+    section: "pesantry",
+    name: "John the BlackSmith",
+    nameLink: "https://x.com/smith_john24746",
+    avatar: "⚒️",         // hammer-and-pick fallback (blacksmith)
+    inscribed: "Day XV, June MMXXVI",
+    coin: "KJP",
+    coinLink: "https://dexscreener.com/pulsechain/" + KJP_CA,
+    fortune: null,
+    fortuneLive: true,
+    entryMcap: 1155,      // snapshot 2026-06-15
     history: []
   },
   {
